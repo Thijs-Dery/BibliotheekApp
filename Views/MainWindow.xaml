@@ -3,14 +3,22 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Bibliotheek App" Height="450" Width="400">
     <Grid Margin="10">
-        <StackPanel VerticalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel x:Name="ButtonPanel" VerticalAlignment="Center" Grid.Row="0">
             <Button Content="Boeken Toevoegen" Width="200" Margin="10" Click="BoekenToevoegen_Click"/>
             <Button Content="Auteurs Toevoegen" Width="200" Margin="10" Click="AuteursToevoegen_Click"/>
-            <Button Content="Gebruikers Toevoegen" Width="200" Margin="10" Click="GebruikersToevoegen_Click"/>
+            <Button Content="Leden Toevoegen" Width="200" Margin="10" Click="LedenToevoegen_Click"/>
             <Button Content="Lijst met Boeken" Width="200" Margin="10" Click="LijstBoeken_Click"/>
-            <Button Content="Lijst met Gebruikers" Width="200" Margin="10" Click="LijstGebruikers_Click"/>
+            <Button Content="Lijst met Leden" Width="200" Margin="10" Click="LijstLeden_Click"/>
             <Button Content="Lijst met Auteurs" Width="200" Margin="10" Click="LijstAuteurs_Click"/>
         </StackPanel>
+        
+        <Frame x:Name="MainFrame" Grid.Row="1"/>
     </Grid>
 </Window>
+
 
