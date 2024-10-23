@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BibliotheekApp
+namespace BibliotheekApp.Models
 {
     public class Lid
     {

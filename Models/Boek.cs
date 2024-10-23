@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
-namespace BibliotheekApp
+namespace BibliotheekApp.Models
 {
     public class Boek
     {
-        public int ISBN { get; set; }
+        [Key]
+        public string ISBN { get; set; }  // Mark this as the primary key
         public string Titel { get; set; }
         public string Genre { get; set; }
         public DateTime PublicatieDatum { get; set; }
         public int AuteurID { get; set; }
-        Auteur Auteur { get; set; }
-
-
+        public Auteur Auteur { get; set; }
     }
 }
+
