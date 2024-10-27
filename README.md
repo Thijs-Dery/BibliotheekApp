@@ -20,3 +20,4 @@ Om de applicatie te testen moet er gebruik gemaakt worden van echte ISBN codes/n
 9780316277098
 9780452284234
 9781250301335
+Om de database te gebruiken moet er eerst in de NuGet Package Manager console "Update-Database" uitgevoerd worden.
