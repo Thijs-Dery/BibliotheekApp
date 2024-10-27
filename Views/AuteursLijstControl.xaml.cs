@@ -1,28 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BibliotheekApp.Controllers;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace BibliotheekApp.Views
 {
-    /// <summary>
-    /// Interaction logic for AuteursLijstControl.xaml
-    /// </summary>
     public partial class AuteursLijstControl : UserControl
     {
+        private readonly AuteurController _auteurController;
+
         public AuteursLijstControl()
         {
             InitializeComponent();
+            _auteurController = new AuteurController();
+            AuteursDataGrid.ItemsSource = _auteurController.GetAlleAuteurs();
         }
 
         private void Terug_Click(object sender, RoutedEventArgs e)
@@ -31,6 +21,6 @@ namespace BibliotheekApp.Views
             mainWindow.MainFrame.Content = null;
             mainWindow.ButtonPanel.Visibility = Visibility.Visible;
         }
-
     }
 }
+

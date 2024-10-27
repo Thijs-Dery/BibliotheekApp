@@ -1,9 +1,8 @@
 ﻿using BibliotheekApp.Models;
-using Microsoft.EntityFrameworkCore;
 using System;
-using System.Windows;
+using System.Collections.Generic;
 using System.Linq;
-
+using System.Windows;
 
 namespace BibliotheekApp.Controllers
 {
@@ -16,12 +15,12 @@ namespace BibliotheekApp.Controllers
             _context = new BibliotheekContext();
         }
 
+        // CREATE
         public void VoegAuteurToe(string naam, DateTime geboorteDatum)
         {
             try
             {
-                var bestaandeAuteur = _context.Auteurs
-                    .FirstOrDefault(a => a.Naam == naam && a.GeboorteDatum == geboorteDatum);
+                var bestaandeAuteur = _context.Auteurs.FirstOrDefault(a => a.Naam == naam && a.GeboorteDatum == geboorteDatum);
 
                 if (bestaandeAuteur != null)
                 {
@@ -34,11 +33,10 @@ namespace BibliotheekApp.Controllers
                     Naam = naam,
                     GeboorteDatum = geboorteDatum
                 };
-                
+
                 _context.Auteurs.Add(auteur);
                 _context.SaveChanges();
-
-                MessageBox.Show("Auteur succesvol toegevoegd!", "Succes", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Auteur succesvol toegevoegd!");
             }
             catch (Exception ex)
             {
@@ -46,6 +44,59 @@ namespace BibliotheekApp.Controllers
             }
         }
 
+        // READ
+        public List<Auteur> GetAlleAuteurs()
+        {
+            return _context.Auteurs.ToList();
+        }
+
+        // UPDATE
+        public void UpdateAuteur(int auteurId, string naam, DateTime geboorteDatum)
+        {
+            try
+            {
+                var auteur = _context.Auteurs.Find(auteurId);
+                if (auteur != null)
+                {
+                    auteur.Naam = naam;
+                    auteur.GeboorteDatum = geboorteDatum;
+                    _context.SaveChanges();
+                    MessageBox.Show("Auteur succesvol bijgewerkt!");
+                }
+                else
+                {
+                    MessageBox.Show("Auteur niet gevonden.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Er is een fout opgetreden bij het bijwerken van de auteur: {ex.Message}");
+            }
+        }
+
+        // DELETE
+        public void DeleteAuteur(int auteurId)
+        {
+            try
+            {
+                var auteur = _context.Auteurs.Find(auteurId);
+                if (auteur != null)
+                {
+                    _context.Auteurs.Remove(auteur);
+                    _context.SaveChanges();
+                    MessageBox.Show("Auteur succesvol verwijderd!");
+                }
+                else
+                {
+                    MessageBox.Show("Auteur niet gevonden.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Er is een fout opgetreden bij het verwijderen van de auteur: {ex.Message}");
+            }
+        }
     }
 }
+
 
