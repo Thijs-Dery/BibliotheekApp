@@ -8,6 +8,8 @@ using System.Windows.Controls;
 using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 
+
+
 namespace BibliotheekApp.Controllers
 {
     public class BoekController
@@ -102,7 +104,7 @@ namespace BibliotheekApp.Controllers
 
 
         // READ
-        public List<Boek> GetBoeken()
+        public List<Boek> GetAlleBoeken()
         {
             return _context.Boeken.ToList();
         }
