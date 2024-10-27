@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Text.RegularExpressions;
+using Microsoft.EntityFrameworkCore;
 
 namespace BibliotheekApp.Controllers
 {
@@ -22,9 +24,61 @@ namespace BibliotheekApp.Controllers
             return new BoekenToevoegenControl();
         }
 
+        // Methode om te controleren of een ISBN geldig is (ISBN-10 of ISBN-13)
+        public static bool IsValidISBN(string isbn)
+        {
+            // Verwijder alle koppeltekens of spaties
+            isbn = isbn.Replace("-", "").Replace(" ", "");
+
+            // Controleer op ISBN-10
+            if (isbn.Length == 10 && Regex.IsMatch(isbn, @"^\d{9}[\dXx]$"))
+            {
+                int sum = 0;
+                for (int i = 0; i < 9; i++)
+                {
+                    sum += (isbn[i] - '0') * (10 - i);
+                }
+
+                // Controleer laatste cijfer, wat 'X' kan zijn
+                char last = isbn[9];
+                sum += (last == 'X' || last == 'x') ? 10 : (last - '0');
+
+                return sum % 11 == 0;
+            }
+
+            // Controleer op ISBN-13
+            else if (isbn.Length == 13 && Regex.IsMatch(isbn, @"^\d{13}$"))
+            {
+                int sum = 0;
+                for (int i = 0; i < 13; i++)
+                {
+                    int digit = isbn[i] - '0';
+                    sum += (i % 2 == 0) ? digit : digit * 3;
+                }
+
+                return sum % 10 == 0;
+            }
+
+            return false;
+        }
+
         // CREATE
         public void VoegBoekToe(string titel, string genre, DateTime publicatieDatum, int auteurId, string isbn)
         {
+            // Controleer of de auteur bestaat
+            var auteur = _context.Auteurs.Find(auteurId);
+            if (auteur == null)
+            {
+                MessageBox.Show("Ongeldig AuteurID. De opgegeven auteur bestaat niet.");
+                return;
+            }
+
+            if (!IsValidISBN(isbn))
+            {
+                MessageBox.Show("Ongeldig ISBN. Voer een geldig ISBN-nummer in.");
+                return;
+            }
+
             try
             {
                 var boek = new Boek
@@ -42,9 +96,10 @@ namespace BibliotheekApp.Controllers
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Er is een fout opgetreden bij het toevoegen van het boek: {ex.Message}");
+                MessageBox.Show($"Er is een fout opgetreden bij het toevoegen van het boek: {ex.InnerException?.Message ?? ex.Message}");
             }
         }
+
 
         // READ
         public List<Boek> GetBoeken()

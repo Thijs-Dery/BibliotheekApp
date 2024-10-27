@@ -18,4 +18,3 @@ namespace BibliotheekApp.Models
         public Auteur Auteur { get; set; }
     }
 }
-
