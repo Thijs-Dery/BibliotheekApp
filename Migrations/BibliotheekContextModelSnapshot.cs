@@ -54,6 +54,9 @@ namespace BibliotheekApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("LidID")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("PublicatieDatum")
                         .HasColumnType("datetime2");
 
@@ -65,16 +68,18 @@ namespace BibliotheekApp.Migrations
 
                     b.HasIndex("AuteurID");
 
+                    b.HasIndex("LidID");
+
                     b.ToTable("Boeken");
                 });
 
             modelBuilder.Entity("BibliotheekApp.Models.Lid", b =>
                 {
-                    b.Property<int>("LidID")
+                    b.Property<int?>("LidID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LidID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("LidID"));
 
                     b.Property<DateTime>("GeboorteDatum")
                         .HasColumnType("datetime2");
@@ -88,6 +93,36 @@ namespace BibliotheekApp.Migrations
                     b.ToTable("Leden");
                 });
 
+            modelBuilder.Entity("BibliotheekApp.Models.LidBoek", b =>
+                {
+                    b.Property<int>("LidBoekID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LidBoekID"));
+
+                    b.Property<string>("ISBN")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("InleverDatum")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("LidID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UitleenDatum")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("LidBoekID");
+
+                    b.HasIndex("ISBN");
+
+                    b.HasIndex("LidID");
+
+                    b.ToTable("LidBoeken");
+                });
+
             modelBuilder.Entity("BibliotheekApp.Models.Boek", b =>
                 {
                     b.HasOne("BibliotheekApp.Models.Auteur", "Auteur")
@@ -96,12 +131,41 @@ namespace BibliotheekApp.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("BibliotheekApp.Models.Lid", "Lid")
+                        .WithMany()
+                        .HasForeignKey("LidID");
+
                     b.Navigation("Auteur");
+
+                    b.Navigation("Lid");
+                });
+
+            modelBuilder.Entity("BibliotheekApp.Models.LidBoek", b =>
+                {
+                    b.HasOne("BibliotheekApp.Models.Boek", "Boek")
+                        .WithMany()
+                        .HasForeignKey("ISBN")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("BibliotheekApp.Models.Lid", "Lid")
+                        .WithMany("GeleendeBoeken")
+                        .HasForeignKey("LidID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("Boek");
+
+                    b.Navigation("Lid");
                 });
 
             modelBuilder.Entity("BibliotheekApp.Models.Auteur", b =>
                 {
                     b.Navigation("Boeken");
+                });
+
+            modelBuilder.Entity("BibliotheekApp.Models.Lid", b =>
+                {
+                    b.Navigation("GeleendeBoeken");
                 });
 #pragma warning restore 612, 618
         }

@@ -52,12 +52,50 @@ namespace BibliotheekApp.Views
             mainWindow.ButtonPanel.Visibility = Visibility.Visible;
         }
 
-        private void LedenDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void AddBookToLid_Click(object sender, RoutedEventArgs e)
         {
+            Button button = (Button)sender;
+            int lidId = (int)button.Tag;
 
+            string isbn = Microsoft.VisualBasic.Interaction.InputBox("Voer het ISBN in van het boek dat je wilt toevoegen:", "Boek Toevoegen");
+            if (!string.IsNullOrEmpty(isbn))
+            {
+                bool result = _lidController.VoegBoekToeAanLid(lidId, isbn);
+                if (result)
+                {
+                    MessageBox.Show("Boek succesvol toegevoegd aan het lid!");
+                }
+                else
+                {
+                    MessageBox.Show("Er is een fout opgetreden. Controleer of het boek bestaat en nog niet is uitgeleend.");
+                }
+                LedenDataGrid.ItemsSource = _lidController.GetAlleLeden(); // Refresh lijst
+            }
+        }
+
+        private void RemoveBookFromLid_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+            int lidId = (int)button.Tag;
+
+            string isbn = Microsoft.VisualBasic.Interaction.InputBox("Voer het ISBN in van het boek dat je wilt verwijderen:", "Boek Verwijderen");
+            if (!string.IsNullOrEmpty(isbn))
+            {
+                bool result = _lidController.VerwijderBoekVanLid(lidId, isbn);
+                if (result)
+                {
+                    MessageBox.Show("Boek succesvol verwijderd van het lid!");
+                }
+                else
+                {
+                    MessageBox.Show("Er is een fout opgetreden. Controleer of het boek aan dit lid is uitgeleend.");
+                }
+                LedenDataGrid.ItemsSource = _lidController.GetAlleLeden(); // Refresh lijst
+            }
         }
     }
 }
+
 
 
 

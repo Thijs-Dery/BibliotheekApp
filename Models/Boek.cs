@@ -14,7 +14,12 @@ namespace BibliotheekApp.Models
         public string Titel { get; set; }
         public string Genre { get; set; }
         public DateTime PublicatieDatum { get; set; }
+
+        public int? LidID { get; set; }
+        public Lid Lid { get; set; }
+
         public int AuteurID { get; set; }
         public Auteur Auteur { get; set; }
     }
+
 }
