@@ -1,11 +1,36 @@
 ﻿<UserControl x:Class="BibliotheekApp.Views.LedenLijstControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             Height="400" Width="600">
-    <Grid>
-        <DataGrid x:Name="LedenDataGrid" AutoGenerateColumns="True" Margin="10"/>
-        <Button Content="Terug" Width="100" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10,0,0,10" Click="Terug_Click"/>
-    </Grid>
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DockPanel>
+
+        <DataGrid x:Name="LedenDataGrid" AutoGenerateColumns="False" ItemsSource="{Binding}" CanUserAddRows="False" 
+                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="LidID" Binding="{Binding LidID}" Width="100" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Naam" Binding="{Binding Naam}" Width="200"/>
+                <DataGridTextColumn Header="GeboorteDatum" Binding="{Binding GeboorteDatum, StringFormat=\{0:dd-MM-yyyy\}}" Width="150"/>
+
+                <DataGridTemplateColumn Header="Bewerken" Width="80">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Bewerken" Click="UpdateLid_Click" Tag="{Binding LidID}" HorizontalAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Verwijderen" Width="90">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Verwijderen" Click="DeleteLid_Click" Tag="{Binding LidID}" HorizontalAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
 </UserControl>
+
+
+
 
 

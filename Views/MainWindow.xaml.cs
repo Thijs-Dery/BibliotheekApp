@@ -29,22 +29,35 @@ namespace BibliotheekApp
             ButtonPanel.Visibility = Visibility.Collapsed;
         }
 
-        private void LijstBoeken_Click(object sender, RoutedEventArgs e)
+        private void OpenBoekenLijst_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new BoekenLijstControl());
-            ButtonPanel.Visibility = Visibility.Collapsed;
+            Window boekenLijstWindow = new Window
+            {
+                Title = "Boeken Lijst",
+                Content = new BoekenLijstControl(),
+            };
+            boekenLijstWindow.Show();
         }
 
-        private void LijstLeden_Click(object sender, RoutedEventArgs e)
+        private void OpenAuteursLijst_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new LedenLijstControl());
-            ButtonPanel.Visibility = Visibility.Collapsed;
+            Window auteursLijstWindow = new Window
+            {
+                Title = "Auteurs Lijst",
+                Content = new AuteursLijstControl(),
+            };
+            auteursLijstWindow.Show();
         }
 
-        private void LijstAuteurs_Click(object sender, RoutedEventArgs e)
+        private void OpenLedenLijst_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new AuteursLijstControl());
-            ButtonPanel.Visibility = Visibility.Collapsed;
+            Window ledenLijstWindow = new Window
+            {
+                Title = "Leden Lijst",
+                Content = new LedenLijstControl(),
+            };
+            ledenLijstWindow.Show();
         }
+
     }
 }

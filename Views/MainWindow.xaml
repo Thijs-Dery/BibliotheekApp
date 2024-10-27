@@ -1,23 +1,25 @@
 ﻿<Window x:Class="BibliotheekApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Bibliotheek App" Height="450" Width="400">
+        Title="Bibliotheek App" Height="500" Width="500">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel x:Name="ButtonPanel" VerticalAlignment="Center" Grid.Row="0">
+        <!-- Buttons -->
+        <StackPanel x:Name="ButtonPanel" VerticalAlignment="Top" Grid.Row="0" Orientation="Vertical" Margin="10">
             <Button Content="Boeken Toevoegen" Width="200" Margin="10" Click="BoekenToevoegen_Click"/>
             <Button Content="Auteurs Toevoegen" Width="200" Margin="10" Click="AuteursToevoegen_Click"/>
             <Button Content="Leden Toevoegen" Width="200" Margin="10" Click="LedenToevoegen_Click"/>
-            <Button Content="Lijst met Boeken" Width="200" Margin="10" Click="LijstBoeken_Click"/>
-            <Button Content="Lijst met Leden" Width="200" Margin="10" Click="LijstLeden_Click"/>
-            <Button Content="Lijst met Auteurs" Width="200" Margin="10" Click="LijstAuteurs_Click"/>
+            <Button Content="Lijst met Boeken" Width="200" Margin="10" Click="OpenBoekenLijst_Click"/>
+            <Button Content="Lijst met Leden" Width="200" Margin="10" Click="OpenLedenLijst_Click"/>
+            <Button Content="Lijst met Auteurs" Width="200" Margin="10" Click="OpenAuteursLijst_Click"/>
         </StackPanel>
-        
-        <Frame x:Name="MainFrame" Grid.Row="1"/>
+
+        <!-- Main Frame for Content -->
+        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Grid.Row="1" Margin="10"/>
     </Grid>
 </Window>
 

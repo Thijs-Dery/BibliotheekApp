@@ -1,27 +1,49 @@
 ﻿<UserControl x:Class="BibliotheekApp.Views.BoekenToevoegenControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             Height="300" Width="400">
-    <Grid Margin="0,0,0,-82">
-        <StackPanel Margin="20">
-            <Label Content="Titel:"/>
-            <TextBox x:Name="TitelTextBox" Margin="0,0,0,10"/>
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid Margin="20" VerticalAlignment="Center" HorizontalAlignment="Center" Width="400">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-            <Label Content="Genre:"/>
-            <TextBox x:Name="GenreTextBox" Margin="0,0,0,10"/>
+        <!-- Titel -->
+        <Label Content="Titel:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
+        <TextBox x:Name="TitelTextBox" Grid.Row="0" Grid.Column="1" Margin="5" Width="200"/>
 
-            <Label Content="Publicatie Datum:"/>
-            <DatePicker x:Name="PublicatieDatumPicker" Margin="0,0,0,10"/>
+        <!-- Genre -->
+        <Label Content="Genre:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
+        <TextBox x:Name="GenreTextBox" Grid.Row="1" Grid.Column="1" Margin="5" Width="200"/>
 
-            <Label Content="Auteur ID:"/>
-            <TextBox x:Name="AuteurIDTextBox" Margin="0,0,0,10"/>
+        <!-- Publicatie Datum -->
+        <Label Content="Publicatie Datum:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
+        <DatePicker x:Name="PublicatieDatumPicker" Grid.Row="2" Grid.Column="1" Margin="5" Width="200"/>
 
-            <Label Content="ISBN:"/>
-            <TextBox x:Name="ISBNTextBox" Margin="0,0,0,10"/>
+        <!-- Auteur ID -->
+        <Label Content="Auteur ID:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
+        <TextBox x:Name="AuteurIDTextBox" Grid.Row="3" Grid.Column="1" Margin="5" Width="200"/>
 
-            <Button Content="Voeg Boek Toe" Click="VoegBoekToe_Click" Margin="0,10,0,0" Height="20"/>
-            <Button Content="Terug" Width="100" Click="Terug_Click" Margin="0,20,0,0" Height="23"/>
+        <!-- ISBN -->
+        <Label Content="ISBN:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
+        <TextBox x:Name="ISBNTextBox" Grid.Row="4" Grid.Column="1" Margin="5" Width="200"/>
+
+        <!-- Knoppen -->
+        <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Center" Margin="5">
+            <Button Content="Voeg Boek Toe" Click="VoegBoekToe_Click" Width="100" Margin="5"/>
+            <Button Content="Terug" Click="Terug_Click" Width="100" Margin="5"/>
         </StackPanel>
     </Grid>
 </UserControl>
+
+
+
+
 

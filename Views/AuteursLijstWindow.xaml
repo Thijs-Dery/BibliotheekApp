@@ -1,0 +1,9 @@
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:BibliotheekApp.Views"
+        Title="Boeken Lijst" Height="407" Width="596">
+    <Grid>
+        <local:AuteursLijstControl  />
+    </Grid>
+</Window>
+
