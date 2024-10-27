@@ -10,7 +10,7 @@ namespace BibliotheekApp.Models
     public class Boek
     {
         [Key]
-        public string ISBN { get; set; }  // Mark this as the primary key
+        public string ISBN { get; set; }
         public string Titel { get; set; }
         public string Genre { get; set; }
         public DateTime PublicatieDatum { get; set; }

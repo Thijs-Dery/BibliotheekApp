@@ -1,9 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.SqlServer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
+
 
 namespace BibliotheekApp.Models
 {
@@ -15,7 +19,13 @@ namespace BibliotheekApp.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=BibliotheekDB;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer(
+            @"Server=(localdb)\mssqllocaldb;Database=BibliotheekDB;Trusted_Connection=True;",
+            options => options.EnableRetryOnFailure()
+            ).LogTo(Console.WriteLine);
+
+
+
         }
     }
 }

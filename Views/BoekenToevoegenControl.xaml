@@ -16,13 +16,12 @@
             <Label Content="Auteur ID:"/>
             <TextBox x:Name="AuteurIDTextBox" Margin="0,0,0,10"/>
 
-            <Button Content="Voeg Boek Toe" Click="VoegBoekToe_Click" Margin="0,10,0,0" Height="20" RenderTransformOrigin="0.503,-0.425"/>
-            <Button Content="Terug" Width="100" Click="Terug_Click" RenderTransformOrigin="0.504,2.945" Margin="0,20,0,0" Height="23"/>
+            <Label Content="ISBN:"/>
+            <TextBox x:Name="ISBNTextBox" Margin="0,0,0,10"/>
 
+            <Button Content="Voeg Boek Toe" Click="VoegBoekToe_Click" Margin="0,10,0,0" Height="20"/>
+            <Button Content="Terug" Width="100" Click="Terug_Click" Margin="0,20,0,0" Height="23"/>
         </StackPanel>
-        
     </Grid>
-    
 </UserControl>
-
 
