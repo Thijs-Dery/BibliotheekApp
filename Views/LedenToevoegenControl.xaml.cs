@@ -1,23 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BibliotheekApp.Controllers;
+using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace BibliotheekApp.Views
 {
-    /// <summary>
-    /// Interaction logic for LedenToevoegenControl.xaml
-    /// </summary>
     public partial class LedenToevoegenControl : UserControl
     {
         public LedenToevoegenControl()
@@ -36,9 +23,10 @@ namespace BibliotheekApp.Views
                 return;
             }
 
-            // Voeg lid toe aan database
+            var lidController = new LidController();
+            lidController.VoegLidToe(naam, geboorteDatum.Value);
 
-            MessageBox.Show("Lid succesvol toegevoegd!", "Succes", MessageBoxButton.OK, MessageBoxImage.Information);
+            // Velden leegmaken na succesvol toevoegen
             NaamTextBox.Text = "";
             GeboorteDatumPicker.SelectedDate = null;
         }
@@ -49,6 +37,6 @@ namespace BibliotheekApp.Views
             mainWindow.MainFrame.Content = null;
             mainWindow.ButtonPanel.Visibility = Visibility.Visible;
         }
-
     }
 }
+

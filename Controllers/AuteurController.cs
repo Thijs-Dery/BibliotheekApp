@@ -34,7 +34,7 @@ namespace BibliotheekApp.Controllers
                     Naam = naam,
                     GeboorteDatum = geboorteDatum
                 };
-
+                
                 _context.Auteurs.Add(auteur);
                 _context.SaveChanges();
 
