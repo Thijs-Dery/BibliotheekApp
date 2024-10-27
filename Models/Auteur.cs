@@ -11,6 +11,6 @@ namespace BibliotheekApp.Models
         public int AuteurID { get; set; }
         public string Naam { get; set; }
         public DateTime GeboorteDatum { get; set; }
-        public List<Boek> Boeken { get; set; }
+        public List<Boek> Boeken { get; set; } = new List<Boek>();
     }
 }

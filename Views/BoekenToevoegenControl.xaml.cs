@@ -29,7 +29,7 @@ namespace BibliotheekApp.Views
                 return;
             }
 
-            // Voeg het boek toe via de controller
+            // Voeg het boek toe
             _boekController.VoegBoekToe(titel, genre, publicatieDatum.Value, auteurId, isbn);
 
             // Maak de invoervelden leeg
