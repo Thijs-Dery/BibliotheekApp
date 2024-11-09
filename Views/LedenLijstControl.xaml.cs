@@ -13,7 +13,14 @@ namespace BibliotheekApp.Views
         {
             InitializeComponent();
             _lidController = new LidController();
-            LedenDataGrid.ItemsSource = _lidController.GetAlleLeden();
+            try
+            {
+                LedenDataGrid.ItemsSource = _lidController.GetAlleLeden();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Er is een fout opgetreden bij het laden van de leden: {ex.Message}", "Fout", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void BewerkLid_Click(object sender, RoutedEventArgs e)

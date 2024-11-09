@@ -50,9 +50,38 @@ namespace BibliotheekApp.Controllers
         // READ
         public List<Lid> GetAlleLeden()
         {
-            // Zorgt ervoor dat GeleendeBoeken ook geladen worden
-            return _context.Leden.Include(l => l.GeleendeBoeken).ToList();
+            try
+            {
+                return _context.Leden
+                               .Include(l => l.GeleendeBoeken)
+                               .ThenInclude(gb => gb.Boek)
+                               .Select(l => new Lid
+                               {
+                                   LidID = l.LidID,
+                                   Naam = l.Naam,
+                                   GeboorteDatum = l.GeboorteDatum,
+                                   GeleendeBoeken = l.GeleendeBoeken.Select(gb => new LidBoek
+                                   {
+                                       LidID = gb.LidID,
+                                       ISBN = gb.ISBN,
+                                       Boek = new Boek
+                                       {
+                                           ISBN = gb.Boek.ISBN,
+                                           Titel = gb.Boek.Titel // Zorg dat dit klopt
+                                       },
+                                       UitleenDatum = gb.UitleenDatum
+                                   }).ToList()
+                               })
+                               .ToList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Er is een fout opgetreden bij het laden van de leden: {ex.Message}", "Fout", MessageBoxButton.OK, MessageBoxImage.Error);
+                return new List<Lid>();
+            }
         }
+
+
 
         // UPDATE
         public bool UpdateLid(int lidId, string naam, DateTime geboorteDatum)
@@ -135,7 +164,6 @@ namespace BibliotheekApp.Controllers
         {
             return _context.LidBoeken.Include(lb => lb.Boek).ToList();
         }
-
 
         // DELETE
         public bool DeleteLid(int lidId)

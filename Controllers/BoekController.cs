@@ -41,7 +41,7 @@ namespace BibliotheekApp.Controllers
                     sum += (isbn[i] - '0') * (10 - i);
                 }
 
-                // Controleer laatste cijfer, wat 'X' kan zijn
+                // Controleer laatste cijfer
                 char last = isbn[9];
                 sum += (last == 'X' || last == 'x') ? 10 : (last - '0');
 
@@ -110,7 +110,7 @@ namespace BibliotheekApp.Controllers
         }
 
         // UPDATE
-        public void UpdateBoek(string isbn, string titel, string genre, DateTime publicatieDatum)
+        public void BewerkBoek(string isbn, string titel, string genre, DateTime publicatieDatum)
         {
             try
             {
@@ -136,25 +136,32 @@ namespace BibliotheekApp.Controllers
         }
 
         // DELETE
-        public void DeleteBoek(string isbn)
+        public bool VerwijderBoek(string isbn)
         {
             try
             {
+                var lidBoeken = _context.LidBoeken.Where(lb => lb.ISBN == isbn).ToList();
+                if (lidBoeken.Any())
+                {
+                    _context.LidBoeken.RemoveRange(lidBoeken);
+                }
+
                 var boek = _context.Boeken.Find(isbn);
                 if (boek != null)
                 {
                     _context.Boeken.Remove(boek);
                     _context.SaveChanges();
                     MessageBox.Show("Boek succesvol verwijderd!");
+                    return true;
                 }
-                else
-                {
-                    MessageBox.Show("Boek niet gevonden.");
-                }
+
+                MessageBox.Show("Boek niet gevonden.");
+                return false;
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Er is een fout opgetreden bij het verwijderen van het boek: {ex.Message}");
+                return false;
             }
         }
     }

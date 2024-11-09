@@ -28,7 +28,7 @@ namespace BibliotheekApp.Views
                 string nieuwGenre = Microsoft.VisualBasic.Interaction.InputBox("Geef het nieuwe genre:", "Update Boek", boek.Genre);
                 DateTime nieuwePublicatieDatum = DateTime.Parse(Microsoft.VisualBasic.Interaction.InputBox("Geef de nieuwe publicatiedatum:", "Update Boek", boek.PublicatieDatum.ToString("dd-MM-yyyy")));
 
-                _boekController.UpdateBoek(isbn, nieuweTitel, nieuwGenre, nieuwePublicatieDatum);
+                _boekController.BewerkBoek(isbn, nieuweTitel, nieuwGenre, nieuwePublicatieDatum);
                 BoekenDataGrid.ItemsSource = _boekController.GetAlleBoeken(); // Refresh lijst
             }
         }
@@ -41,7 +41,7 @@ namespace BibliotheekApp.Views
             var result = MessageBox.Show("Weet je zeker dat je dit boek wilt verwijderen?", "Bevestig Verwijdering", MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (result == MessageBoxResult.Yes)
             {
-                _boekController.DeleteBoek(isbn);
+                _boekController.VerwijderBoek(isbn);
                 BoekenDataGrid.ItemsSource = _boekController.GetAlleBoeken(); // Refresh lijst
             }
         }

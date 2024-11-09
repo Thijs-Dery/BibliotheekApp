@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using System;
+using BibliotheekApp.Models;
+
 
 namespace BibliotheekApp.Models
 {
@@ -21,23 +23,21 @@ namespace BibliotheekApp.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Configuratie voor LidBoek-relatie
             modelBuilder.Entity<LidBoek>()
-                .HasKey(lb => lb.LidBoekID); // Primaire sleutel voor LidBoek
+                .HasKey(lb => lb.LidBoekID);
 
             modelBuilder.Entity<LidBoek>()
                 .HasOne(lb => lb.Lid)
-                .WithMany(l => l.GeleendeBoeken) // Navigatie-eigenschap in Lid-model
+                .WithMany(l => l.GeleendeBoeken)
                 .HasForeignKey(lb => lb.LidID)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<LidBoek>()
                 .HasOne(lb => lb.Boek)
-                .WithMany() // Boek hoeft geen lijst van geleende boeken te hebben
+                .WithMany(b => b.LidBoeken)
                 .HasForeignKey(lb => lb.ISBN)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
-            // Configuratie voor Boek-Auteur relatie
             modelBuilder.Entity<Boek>()
                 .HasOne(b => b.Auteur)
                 .WithMany(a => a.Boeken)
