@@ -7,44 +7,54 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="LidID" Binding="{Binding LidID}" Width="100" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Naam" Binding="{Binding Naam}" Width="200"/>
-                <DataGridTextColumn Header="GeboorteDatum" Binding="{Binding GeboorteDatum, StringFormat={}{0:dd-MM-yyyy}}" Width="150"/>
+                <DataGridTextColumn Header="Geboortedatum" Binding="{Binding GeboorteDatum, StringFormat={}{0:dd-MM-yyyy}}" Width="150"/>
 
-                <DataGridTemplateColumn Header="Boek Toevoegen" Width="100">
+                <DataGridTemplateColumn Header="Boek Toevoegen" Width="120">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="Toevoegen" Click="AddBookToLid_Click" Tag="{Binding LidID}" HorizontalAlignment="Center"/>
+                            <Button Content="Toevoegen" Click="VoegBoekToeAanLid_Click" Tag="{Binding LidID}" HorizontalAlignment="Center"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <!-- Verwijderen knop -->
-                <DataGridTemplateColumn Header="Boek Verwijderen" Width="100">
+                <DataGridTemplateColumn Header="Boek Verwijderen" Width="120">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="Verwijderen" Click="RemoveBookFromLid_Click" Tag="{Binding LidID}" HorizontalAlignment="Center"/>
+                            <Button Content="Verwijderen" Click="VerwijderBoekVanLid_Click" Tag="{Binding LidID}" HorizontalAlignment="Center"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn Header="Bewerken" Width="80">
+                <DataGridTemplateColumn Header="Bewerken" Width="100">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="Bewerken" Click="UpdateLid_Click" Tag="{Binding LidID}" HorizontalAlignment="Center"/>
+                            <Button Content="Bewerken" Click="BewerkLid_Click" Tag="{Binding LidID}" HorizontalAlignment="Center"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn Header="Verwijderen" Width="90">
+                <DataGridTemplateColumn Header="Lid Verwijderen" Width="130">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="Verwijderen" Click="DeleteLid_Click" Tag="{Binding LidID}" HorizontalAlignment="Center"/>
+                            <Button Content="Verwijderen" Click="VerwijderLid_Click" Tag="{Binding LidID}" HorizontalAlignment="Center"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Geleende Boeken" Width="150">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Geleende Boeken" Click="BekijkGeleendeBoeken_Click" Tag="{Binding LidID}" HorizontalAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>
 </UserControl>
+
+
 
 
 

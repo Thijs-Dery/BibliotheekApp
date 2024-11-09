@@ -96,31 +96,46 @@ namespace BibliotheekApp.Controllers
                 return false;
             }
 
+            // Controleer of het boek al is uitgeleend
             if (boek.LidID != null)
             {
                 MessageBox.Show("Dit boek is al uitgeleend aan een ander lid.");
                 return false;
             }
 
-            boek.LidID = lidId;
+            // Voeg een nieuwe entry toe aan LidBoeken
+            var lidBoek = new LidBoek
+            {
+                LidID = lidId,
+                ISBN = isbn,
+                UitleenDatum = DateTime.Now
+            };
+
+            _context.LidBoeken.Add(lidBoek);
             _context.SaveChanges();
             return true;
         }
 
         public bool VerwijderBoekVanLid(int lidId, string isbn)
         {
-            var boek = _context.Boeken.FirstOrDefault(b => b.ISBN == isbn && b.LidID == lidId);
+            var lidBoek = _context.LidBoeken.FirstOrDefault(lb => lb.LidID == lidId && lb.ISBN == isbn);
 
-            if (boek == null)
+            if (lidBoek == null)
             {
                 MessageBox.Show("Boek niet gevonden of is niet uitgeleend aan dit lid.");
                 return false;
             }
 
-            boek.LidID = null;
+            _context.LidBoeken.Remove(lidBoek);
             _context.SaveChanges();
             return true;
         }
+
+        public List<LidBoek> GetAllGeleendeBoeken()
+        {
+            return _context.LidBoeken.Include(lb => lb.Boek).ToList();
+        }
+
 
         // DELETE
         public bool DeleteLid(int lidId)

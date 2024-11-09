@@ -16,7 +16,7 @@ namespace BibliotheekApp.Views
             LedenDataGrid.ItemsSource = _lidController.GetAlleLeden();
         }
 
-        private void UpdateLid_Click(object sender, RoutedEventArgs e)
+        private void BewerkLid_Click(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
             int lidId = (int)button.Tag;
@@ -32,7 +32,7 @@ namespace BibliotheekApp.Views
             }
         }
 
-        private void DeleteLid_Click(object sender, RoutedEventArgs e)
+        private void VerwijderLid_Click(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
             int lidId = (int)button.Tag;
@@ -52,7 +52,7 @@ namespace BibliotheekApp.Views
             mainWindow.ButtonPanel.Visibility = Visibility.Visible;
         }
 
-        private void AddBookToLid_Click(object sender, RoutedEventArgs e)
+        private void VoegBoekToeAanLid_Click(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
             int lidId = (int)button.Tag;
@@ -73,7 +73,7 @@ namespace BibliotheekApp.Views
             }
         }
 
-        private void RemoveBookFromLid_Click(object sender, RoutedEventArgs e)
+        private void VerwijderBoekVanLid_Click(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
             int lidId = (int)button.Tag;
@@ -91,6 +91,19 @@ namespace BibliotheekApp.Views
                     MessageBox.Show("Er is een fout opgetreden. Controleer of het boek aan dit lid is uitgeleend.");
                 }
                 LedenDataGrid.ItemsSource = _lidController.GetAlleLeden(); // Refresh lijst
+            }
+        }
+
+        private void BekijkGeleendeBoeken_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+            int lidId = (int)button.Tag;
+
+            var lid = _lidController.GetAlleLeden().FirstOrDefault(l => l.LidID == lidId);
+            if (lid != null)
+            {
+                GeleendeBoekenWindow boekenWindow = new GeleendeBoekenWindow(lid);
+                boekenWindow.Show();
             }
         }
     }
