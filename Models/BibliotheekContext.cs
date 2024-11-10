@@ -102,7 +102,6 @@ namespace BibliotheekApp.Models
                 new Boek { ISBN = "TEST-0017", Titel = "De Geschiedenis van Technologie", Genre = "Wetenschap", PublicatieDatum = new DateTime(2019, 12, 22), AuteurID = 10 }
             );
         }
-
     }
 }
 
