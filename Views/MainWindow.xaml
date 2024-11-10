@@ -9,14 +9,48 @@
         </Grid.RowDefinitions>
 
         <StackPanel x:Name="ButtonPanel" VerticalAlignment="Top" Grid.Row="0" Orientation="Vertical" Margin="10,10,10,0" Height="405" Grid.RowSpan="2">
-            <Button Content="Boeken" Width="200" Margin="10" Click="OpenBoekenLijst_Click"/>
-            <Button Content="Leden" Width="200" Margin="10" Click="OpenLedenLijst_Click"/>
-            <Button Content="Auteurs" Width="200" Margin="10" Click="OpenAuteursLijst_Click"/>
-            <Button Content="Bekijk Alle Geleende Boeken"  Width="200" Margin="10" Click="BekijkAlleGeleendeBoeken_Click"/>
+            <Button Content="Boeken" Width="200" Margin="10" Click="OpenBoekenLijst_Click">
+                <Button.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Bekijk alle boeken in de bibliotheek" Click="BekijkBoeken_Click" />
+                        <MenuItem Header="Voeg nieuwe boeken toe" Click="VoegBoekToe_Click" />
+                        <MenuItem Header="Verwijder boeken" Click="VerwijderBoek_Click" />
+                    </ContextMenu>
+                </Button.ContextMenu>
+            </Button>
+
+            <Button Content="Leden" Width="200" Margin="10" Click="OpenLedenLijst_Click">
+                <Button.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Bekijk alle leden van de bibliotheek" Click="BekijkLeden_Click" />
+                        <MenuItem Header="Voeg nieuwe leden toe" Click="VoegLidToe_Click" />
+                        <MenuItem Header="Verwijder leden" Click="VerwijderLid_Click" />
+                    </ContextMenu>
+                </Button.ContextMenu>
+            </Button>
+
+            <Button Content="Auteurs" Width="200" Margin="10" Click="OpenAuteursLijst_Click">
+                <Button.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Bekijk de lijst van alle auteurs" Click="BekijkAuteurs_Click" />
+                        <MenuItem Header="Voeg nieuwe auteurs toe" Click="VoegAuteurToe_Click" />
+                        <MenuItem Header="Verwijder auteurs" Click="VerwijderAuteur_Click" />
+                    </ContextMenu>
+                </Button.ContextMenu>
+            </Button>
+
+            <Button Content="Bekijk Alle Geleende Boeken" Width="200" Margin="10" Click="BekijkAlleGeleendeBoeken_Click">
+                <Button.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Bekijk uitgeleende boeken" Click="BekijkGeleendeBoeken_Click" />
+                    </ContextMenu>
+                </Button.ContextMenu>
+            </Button>
         </StackPanel>
 
         <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Grid.Row="1" Margin="10"/>
     </Grid>
 </Window>
+
 
 

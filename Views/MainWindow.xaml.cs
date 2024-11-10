@@ -97,6 +97,127 @@ namespace BibliotheekApp
                 _alleGeleendeBoekenWindow.Focus();
             }
         }
+
+        private void BekijkBoeken_Click(object sender, RoutedEventArgs e)
+        {
+            var boekenLijstWindow = new Window
+            {
+                Title = "Boeken Lijst",
+                Content = new BoekenLijstControl(),
+                Width = 800,
+                Height = 600
+            };
+            boekenLijstWindow.Show();
+        }
+
+        private void VoegBoekToe_Click(object sender, RoutedEventArgs e)
+        {
+            var boekenToevoegenWindow = new Window
+            {
+                Title = "Boek Toevoegen",
+                Content = new BoekenToevoegenControl(),
+                Width = 450,
+                Height = 400
+            };
+            boekenToevoegenWindow.Show();
+        }
+
+        private void VerwijderBoek_Click(object sender, RoutedEventArgs e)
+        {
+            var verwijderBoekenWindow = new Window
+            {
+                Title = "Verwijder Boeken",
+                Content = new BoekenLijstControl(), // Pas dit aan als je een specifieke verwijderinterface hebt
+                Width = 800,
+                Height = 600
+            };
+            verwijderBoekenWindow.Show();
+        }
+
+        private void BekijkLeden_Click(object sender, RoutedEventArgs e)
+        {
+            var ledenLijstWindow = new Window
+            {
+                Title = "Leden Lijst",
+                Content = new LedenLijstControl(),
+                Width = 800,
+                Height = 600
+            };
+            ledenLijstWindow.Show();
+        }
+
+        private void VoegLidToe_Click(object sender, RoutedEventArgs e)
+        {
+            var ledenToevoegenWindow = new Window
+            {
+                Title = "Lid Toevoegen",
+                Content = new LedenToevoegenControl(),
+                Width = 450,
+                Height = 400
+            };
+            ledenToevoegenWindow.Show();
+        }
+
+        private void VerwijderLid_Click(object sender, RoutedEventArgs e)
+        {
+            var verwijderLedenWindow = new Window
+            {
+                Title = "Verwijder Leden",
+                Content = new LedenLijstControl(),
+                Width = 800,
+                Height = 600
+            };
+            verwijderLedenWindow.Show();
+        }
+
+        private void BekijkAuteurs_Click(object sender, RoutedEventArgs e)
+        {
+            var auteursLijstWindow = new Window
+            {
+                Title = "Auteurs Lijst",
+                Content = new AuteursLijstControl(),
+                Width = 800,
+                Height = 600
+            };
+            auteursLijstWindow.Show();
+        }
+
+        private void VoegAuteurToe_Click(object sender, RoutedEventArgs e)
+        {
+            var auteursToevoegenWindow = new Window
+            {
+                Title = "Auteur Toevoegen",
+                Content = new AuteursToevoegenControl(),
+                Width = 450,
+                Height = 400
+            };
+            auteursToevoegenWindow.Show();
+        }
+
+        private void VerwijderAuteur_Click(object sender, RoutedEventArgs e)
+        {
+            var verwijderAuteursWindow = new Window
+            {
+                Title = "Verwijder Auteurs",
+                Content = new AuteursLijstControl(), 
+                Width = 800,
+                Height = 600
+            };
+            verwijderAuteursWindow.Show();
+        }
+
+        private void BekijkGeleendeBoeken_Click(object sender, RoutedEventArgs e)
+        {
+            var geleendeBoekenWindow = new Window
+            {
+                Title = "Geleende Boeken",
+                Content = new AllGeleendeBoekenControl(),
+                Width = 800,
+                Height = 600
+            };
+            geleendeBoekenWindow.Show();
+        }
+
     }
 }
 
