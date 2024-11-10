@@ -10,7 +10,6 @@ namespace BibliotheekApp.Controllers
     {
         private readonly BibliotheekContext _context;
 
-        // Constructor met de juiste syntax
         public AuteurController()
         {
             _context = new BibliotheekContext();

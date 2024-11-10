@@ -2,6 +2,7 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using BibliotheekApp.Views;
 
 namespace BibliotheekApp.Views
 {
@@ -16,16 +17,26 @@ namespace BibliotheekApp.Views
             AuteursDataGrid.ItemsSource = _auteurController.GetAlleAuteurs();
         }
 
+        private void AuteurToevoegen_Click(object sender, RoutedEventArgs e)
+        {
+            var auteursToevoegenWindow = new Window
+            {
+                Title = "Auteur Toevoegen",
+                Content = new AuteursToevoegenControl(),
+                Width = 600,
+                Height = 400
+            };
+            auteursToevoegenWindow.Show();
+        }
+
         private void UpdateAuteur_Click(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
             int auteurId = (int)button.Tag;
 
-            // Logica voor het bijwerken van de auteur, bijvoorbeeld door een update-scherm te tonen
             var auteur = _auteurController.GetAlleAuteurs().Find(a => a.AuteurID == auteurId);
             if (auteur != null)
             {
-                // Prompt voor nieuwe gegevens (of pas aan naar je UI-wensen)
                 string nieuweNaam = Microsoft.VisualBasic.Interaction.InputBox("Geef de nieuwe naam:", "Update Auteur", auteur.Naam);
                 DateTime nieuweGeboorteDatum = DateTime.Parse(Microsoft.VisualBasic.Interaction.InputBox("Geef de nieuwe geboortedatum:", "Update Auteur", auteur.GeboorteDatum.ToString("dd-MM-yyyy")));
 
@@ -55,4 +66,5 @@ namespace BibliotheekApp.Views
         }
     }
 }
+
 

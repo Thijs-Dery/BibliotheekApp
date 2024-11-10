@@ -67,7 +67,7 @@ namespace BibliotheekApp.Controllers
                                        Boek = new Boek
                                        {
                                            ISBN = gb.Boek.ISBN,
-                                           Titel = gb.Boek.Titel // Zorg dat dit klopt
+                                           Titel = gb.Boek.Titel
                                        },
                                        UitleenDatum = gb.UitleenDatum
                                    }).ToList()

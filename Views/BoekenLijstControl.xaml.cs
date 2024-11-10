@@ -13,7 +13,26 @@ namespace BibliotheekApp.Views
         {
             InitializeComponent();
             _boekController = new BoekController();
-            BoekenDataGrid.ItemsSource = _boekController.GetAlleBoeken();
+            try
+            {
+                BoekenDataGrid.ItemsSource = _boekController.GetAlleBoeken();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Er is een fout opgetreden bij het laden van de boeken: {ex.Message}", "Fout", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void BoekToevoegen_Click(object sender, RoutedEventArgs e)
+        {
+            var boekenToevoegenWindow = new Window
+            {
+                Title = "Boek Toevoegen",
+                Content = new BoekenToevoegenControl(),
+                Width = 600,
+                Height = 400
+            };
+            boekenToevoegenWindow.Show(); 
         }
 
         private void UpdateBoek_Click(object sender, RoutedEventArgs e)
@@ -54,5 +73,7 @@ namespace BibliotheekApp.Views
         }
     }
 }
+
+
 
 

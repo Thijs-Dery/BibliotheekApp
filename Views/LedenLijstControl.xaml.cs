@@ -2,6 +2,7 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using BibliotheekApp.Views;
 
 namespace BibliotheekApp.Views
 {
@@ -21,6 +22,18 @@ namespace BibliotheekApp.Views
             {
                 MessageBox.Show($"Er is een fout opgetreden bij het laden van de leden: {ex.Message}", "Fout", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void LidToevoegen_Click(object sender, RoutedEventArgs e)
+        {
+            var ledenToevoegenWindow = new Window
+            {
+                Title = "Lid Toevoegen",
+                Content = new LedenToevoegenControl(),
+                Width = 600,
+                Height = 400
+            };
+            ledenToevoegenWindow.Show();
         }
 
         private void BewerkLid_Click(object sender, RoutedEventArgs e)
@@ -73,6 +86,7 @@ namespace BibliotheekApp.Views
         }
     }
 }
+
 
 
 

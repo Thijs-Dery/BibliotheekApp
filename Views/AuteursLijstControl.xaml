@@ -2,6 +2,9 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <DockPanel>
+
+        <Button Content="Auteur Toevoegen" Click="AuteurToevoegen_Click" Margin="5" DockPanel.Dock="Top"/>
+
         <DataGrid x:Name="AuteursDataGrid" AutoGenerateColumns="False" ItemsSource="{Binding}" CanUserAddRows="False"
                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <DataGrid.Columns>

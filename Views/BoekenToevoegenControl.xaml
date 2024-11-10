@@ -15,32 +15,24 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Titel -->
         <Label Content="Titel:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
         <TextBox x:Name="TitelTextBox" Grid.Row="0" Grid.Column="1" Margin="5" Width="200"/>
 
-        <!-- Genre -->
         <Label Content="Genre:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
         <TextBox x:Name="GenreTextBox" Grid.Row="1" Grid.Column="1" Margin="5" Width="200"/>
 
-        <!-- Publicatie Datum -->
         <Label Content="Publicatie Datum:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
         <DatePicker x:Name="PublicatieDatumPicker" Grid.Row="2" Grid.Column="1" Margin="5" Width="200"/>
 
-        <!-- Auteur ID -->
         <Label Content="Auteur:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
         <ComboBox x:Name="AuteurComboBox" Grid.Row="3" Grid.Column="1" Margin="5" Width="200" DisplayMemberPath="Naam" SelectedValuePath="AuteurID"/>
 
-
-        <!-- ISBN -->
         <Label Content="ISBN:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
         <TextBox x:Name="ISBNTextBox" Grid.Row="4" Grid.Column="1" Margin="5" Width="200"/>
 
         <CheckBox x:Name="ISBNLeeglatenCheckBox" Content="ISBN leeglaten?" Grid.Row="5" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="5"
           Checked="ISBNLeeglatenCheckBox_Checked" Unchecked="ISBNLeeglatenCheckBox_Unchecked"/>
 
-
-        <!-- Knoppen -->
         <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Center" Margin="5">
             <Button Content="Voeg Boek Toe" Click="VoegBoekToe_Click" Width="100" Margin="5"/>
             <Button Content="Terug" Click="Terug_Click" Width="100" Margin="5"/>

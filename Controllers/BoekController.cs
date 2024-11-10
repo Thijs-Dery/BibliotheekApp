@@ -8,8 +8,6 @@ using System.Windows.Controls;
 using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 
-
-
 namespace BibliotheekApp.Controllers
 {
     public class BoekController
@@ -29,10 +27,8 @@ namespace BibliotheekApp.Controllers
         // Methode om te controleren of een ISBN geldig is (ISBN-10 of ISBN-13)
         public static bool IsValidISBN(string isbn)
         {
-            // Verwijder alle koppeltekens of spaties
             isbn = isbn.Replace("-", "").Replace(" ", "");
 
-            // Controleer op ISBN-10
             if (isbn.Length == 10 && Regex.IsMatch(isbn, @"^\d{9}[\dXx]$"))
             {
                 int sum = 0;
@@ -41,14 +37,11 @@ namespace BibliotheekApp.Controllers
                     sum += (isbn[i] - '0') * (10 - i);
                 }
 
-                // Controleer laatste cijfer
                 char last = isbn[9];
                 sum += (last == 'X' || last == 'x') ? 10 : (last - '0');
 
                 return sum % 11 == 0;
             }
-
-            // Controleer op ISBN-13
             else if (isbn.Length == 13 && Regex.IsMatch(isbn, @"^\d{13}$"))
             {
                 int sum = 0;
@@ -67,7 +60,6 @@ namespace BibliotheekApp.Controllers
         // CREATE
         public void VoegBoekToe(string titel, string genre, DateTime publicatieDatum, int auteurId, string isbn = null)
         {
-            // Controleer of de auteur bestaat
             var auteur = _context.Auteurs.Find(auteurId);
             if (auteur == null)
             {
@@ -75,12 +67,11 @@ namespace BibliotheekApp.Controllers
                 return;
             }
 
-            // Genereer een test-ISBN alleen als het ISBN expliciet op null is ingesteld
             if (isbn == null)
             {
                 isbn = GenerateTemporaryISBN();
             }
-            else if (!IsValidISBN(isbn)) // Controleer alleen als er een ISBN is ingevoerd
+            else if (!IsValidISBN(isbn))
             {
                 MessageBox.Show("Ongeldig ISBN. Voer een geldig ISBN-nummer in.");
                 return;
@@ -107,18 +98,25 @@ namespace BibliotheekApp.Controllers
             }
         }
 
-
         private string GenerateTemporaryISBN()
         {
-            return "TEST-" + Guid.NewGuid().ToString().Substring(0, 8); 
+            return "TEST-" + Guid.NewGuid().ToString().Substring(0, 8);
         }
 
-
-
         // READ
-        public List<Boek> GetAlleBoeken()
+        public List<dynamic> GetAlleBoeken()
         {
-            return _context.Boeken.ToList();
+            return _context.Boeken
+                           .Include(b => b.Auteur)
+                           .Select(b => new
+                           {
+                               b.ISBN,
+                               b.Titel,
+                               b.Genre,
+                               b.PublicatieDatum,
+                               AuteurNaam = b.Auteur != null ? b.Auteur.Naam : "Onbekend"
+                           })
+                           .ToList<dynamic>();
         }
 
         // UPDATE
@@ -178,5 +176,6 @@ namespace BibliotheekApp.Controllers
         }
     }
 }
+
 
 

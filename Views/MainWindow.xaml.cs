@@ -52,7 +52,7 @@ namespace BibliotheekApp
             {
                 Title = "Boeken Lijst",
                 Content = new BoekenLijstControl(),
-                Width = 800,
+                Width = 1050,
                 Height = 600
             };
             boekenLijstWindow.Show();
@@ -64,7 +64,7 @@ namespace BibliotheekApp
             {
                 Title = "Auteurs Lijst",
                 Content = new AuteursLijstControl(),
-                Width = 800,
+                Width = 650,
                 Height = 600
             };
             auteursLijstWindow.Show();
@@ -76,7 +76,7 @@ namespace BibliotheekApp
             {
                 Title = "Leden Lijst",
                 Content = new LedenLijstControl(),
-                Width = 800,
+                Width = 860,
                 Height = 600
             };
             ledenLijstWindow.Show();
