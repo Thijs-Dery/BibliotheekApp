@@ -177,10 +177,11 @@ namespace BibliotheekApp.Controllers
                     return false;
                 }
 
-                // Eventuele geleende boeken loskoppelen
-                foreach (var boek in lid.GeleendeBoeken)
+                // Controleer of het lid nog boeken leent
+                if (lid.GeleendeBoeken.Any())
                 {
-                    boek.LidID = null;
+                    MessageBox.Show("Dit lid kan niet worden verwijderd omdat het nog boeken leent.", "Verwijderen niet toegestaan", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return false;
                 }
 
                 _context.Leden.Remove(lid);
@@ -191,6 +192,39 @@ namespace BibliotheekApp.Controllers
             catch (Exception ex)
             {
                 MessageBox.Show($"Er is een fout opgetreden bij het verwijderen van het lid: {ex.Message}");
+                return false;
+            }
+        }
+
+        public bool StopLening(string isbn, int lidId)
+        {
+            try
+            {
+                var lidBoek = _context.LidBoeken
+                                      .Include(lb => lb.Boek)
+                                      .FirstOrDefault(lb => lb.ISBN == isbn && lb.LidID == lidId);
+
+                if (lidBoek == null)
+                {
+                    MessageBox.Show("Geen lening gevonden voor dit boek en lid.");
+                    return false;
+                }
+
+                // Reset de uitleendatum en maak de relatie met het lid los
+                lidBoek.UitleenDatum = null;
+                lidBoek.LidID = null;
+
+                // Verwijder de lidBoek-record om de relatie te verbreken, indien gewenst
+                _context.LidBoeken.Remove(lidBoek);
+
+                _context.SaveChanges();
+
+                MessageBox.Show("Lening succesvol beëindigd!");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Er is een fout opgetreden bij het beëindigen van de lening: {ex.Message}");
                 return false;
             }
         }

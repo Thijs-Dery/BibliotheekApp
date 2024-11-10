@@ -3,6 +3,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using BibliotheekApp.Views;
+using System.Windows.Input;
 
 namespace BibliotheekApp.Views
 {
@@ -75,6 +76,19 @@ namespace BibliotheekApp.Views
         private void Refresh_Click(object sender, RoutedEventArgs e)
         {
             AuteursDataGrid.ItemsSource = _auteurController.GetAlleAuteurs(); // Refresh lijst
+        }
+
+        private void ZoekTextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            var zoekTerm = ZoekTextBox.Text.ToLower();
+            var alleAuteurs = _auteurController.GetAlleAuteurs();
+
+            var gefilterdeAuteurs = alleAuteurs
+                .Where(a => a.Naam.ToLower().Contains(zoekTerm) ||
+                            a.AuteurID.ToString().Contains(zoekTerm))
+                .ToList();
+
+            AuteursDataGrid.ItemsSource = gefilterdeAuteurs;
         }
     }
 }

@@ -17,7 +17,7 @@ public class LidBoek
     public string ISBN { get; set; }
     public Boek Boek { get; set; }
 
-    public DateTime UitleenDatum { get; set; }
+    public DateTime? UitleenDatum { get; set; }
     public DateTime? InleverDatum { get; set; }
 }
 

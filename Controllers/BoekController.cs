@@ -117,8 +117,9 @@ namespace BibliotheekApp.Controllers
                                b.Genre,
                                b.PublicatieDatum,
                                AuteurNaam = b.Auteur != null ? b.Auteur.Naam : "Onbekend",
-                               UitleenDatum = b.LidBoeken.Any() ? b.LidBoeken.FirstOrDefault().UitleenDatum : (DateTime?)null, // Neem de uitleendatum op
-                               LenerNaam = b.LidBoeken.Any() ? b.LidBoeken.FirstOrDefault().Lid.Naam : "Niet uitgeleend"
+                               LidID = b.LidBoeken.Any(lb => lb.Lid != null) ? b.LidBoeken.FirstOrDefault(lb => lb.Lid != null).Lid.LidID : (int?)null,
+                               LenerNaam = b.LidBoeken.Any(lb => lb.Lid != null) ? b.LidBoeken.FirstOrDefault(lb => lb.Lid != null).Lid.Naam : "Niet uitgeleend",
+                               UitleenDatum = b.LidBoeken.Any(lb => lb.Lid != null) ? b.LidBoeken.FirstOrDefault(lb => lb.Lid != null).UitleenDatum : (DateTime?)null
                            })
                            .ToList<dynamic>();
         }

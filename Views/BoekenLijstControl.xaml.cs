@@ -2,6 +2,7 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace BibliotheekApp.Views
 {
@@ -82,6 +83,21 @@ namespace BibliotheekApp.Views
         private void Refresh_Click(object sender, RoutedEventArgs e)
         {
             BoekenDataGrid.ItemsSource = _boekController.GetAlleBoeken(); // Refresh lijst
+        }
+
+        private void ZoekTextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            var zoekTerm = ZoekTextBox.Text.ToLower();
+            var alleBoeken = _boekController.GetAlleBoeken();
+
+            var gefilterdeBoeken = alleBoeken
+                .Where(b => b.Titel.ToLower().Contains(zoekTerm) ||
+                            b.ISBN.ToLower().Contains(zoekTerm) ||
+                            (b.AuteurNaam != null && b.AuteurNaam.ToLower().Contains(zoekTerm)) ||
+                            (b.Genre != null && b.Genre.ToLower().Contains(zoekTerm)))
+                .ToList();
+
+            BoekenDataGrid.ItemsSource = gefilterdeBoeken;
         }
     }
 }
