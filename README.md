@@ -1,5 +1,5 @@
 # BibliotheekApp
-Om de applicatie te testen moet er gebruik gemaakt worden van echte ISBN codes/nummers, de applicatie accepteerd ISBN 10 en ISBN 13. Hier zijn een aantal ISBN's voor het gemak om te testen: 
+Om de applicatie te testen kan er gebruik gemaakt worden van echte ISBN codes/nummers, de applicatie accepteerd ISBN 10 en ISBN 13. Hier zijn een aantal ISBN's voor het gemak om te testen: 
 9783161484100
 9780393067923
 9781402894626
@@ -20,4 +20,6 @@ Om de applicatie te testen moet er gebruik gemaakt worden van echte ISBN codes/n
 9780316277098
 9780452284234
 9781250301335
+Er is ook de optie om geen ISBN in te geven bij het aanmaken van een boek in de applicatie.
 Om de database te gebruiken moet er eerst in de NuGet Package Manager console "Update-Database" uitgevoerd worden.
+Voor het optimaal testen van de applicatie is het aan te raden om een tool zoals SSMS (SQL Server Management Studio) te gebruiken en erin te verbinden met (localdb)\MSSQLLocalDB.
