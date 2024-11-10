@@ -21,5 +21,5 @@ Om de applicatie te testen kan er gebruik gemaakt worden van echte ISBN codes/nu
 9780452284234
 9781250301335
 Er is ook de optie om geen ISBN in te geven bij het aanmaken van een boek in de applicatie.
-Om de database te gebruiken moet er eerst in de NuGet Package Manager console "Update-Database" uitgevoerd worden.
+**Om de database te gebruiken moet er eerst in de NuGet Package Manager console "Update-Database" uitgevoerd worden.**
 Voor het optimaal testen van de applicatie is het aan te raden om een tool zoals SSMS (SQL Server Management Studio) te gebruiken en erin te verbinden met (localdb)\MSSQLLocalDB.
