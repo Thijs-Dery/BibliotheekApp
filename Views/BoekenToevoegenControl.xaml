@@ -35,6 +35,10 @@
         <Label Content="ISBN:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
         <TextBox x:Name="ISBNTextBox" Grid.Row="4" Grid.Column="1" Margin="5" Width="200"/>
 
+        <CheckBox x:Name="ISBNLeeglatenCheckBox" Content="ISBN leeglaten?" Grid.Row="5" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="5"
+          Checked="ISBNLeeglatenCheckBox_Checked" Unchecked="ISBNLeeglatenCheckBox_Unchecked"/>
+
+
         <!-- Knoppen -->
         <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Center" Margin="5">
             <Button Content="Voeg Boek Toe" Click="VoegBoekToe_Click" Width="100" Margin="5"/>

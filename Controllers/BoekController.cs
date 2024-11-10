@@ -65,7 +65,7 @@ namespace BibliotheekApp.Controllers
         }
 
         // CREATE
-        public void VoegBoekToe(string titel, string genre, DateTime publicatieDatum, int auteurId, string isbn)
+        public void VoegBoekToe(string titel, string genre, DateTime publicatieDatum, int auteurId, string isbn = null)
         {
             // Controleer of de auteur bestaat
             var auteur = _context.Auteurs.Find(auteurId);
@@ -75,7 +75,12 @@ namespace BibliotheekApp.Controllers
                 return;
             }
 
-            if (!IsValidISBN(isbn))
+            // Genereer een test-ISBN alleen als het ISBN expliciet op null is ingesteld
+            if (isbn == null)
+            {
+                isbn = GenerateTemporaryISBN();
+            }
+            else if (!IsValidISBN(isbn)) // Controleer alleen als er een ISBN is ingevoerd
             {
                 MessageBox.Show("Ongeldig ISBN. Voer een geldig ISBN-nummer in.");
                 return;
@@ -101,6 +106,13 @@ namespace BibliotheekApp.Controllers
                 MessageBox.Show($"Er is een fout opgetreden bij het toevoegen van het boek: {ex.InnerException?.Message ?? ex.Message}");
             }
         }
+
+
+        private string GenerateTemporaryISBN()
+        {
+            return "TEST-" + Guid.NewGuid().ToString().Substring(0, 8); 
+        }
+
 
 
         // READ
