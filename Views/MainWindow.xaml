@@ -39,10 +39,10 @@
                 </Button.ContextMenu>
             </Button>
 
-            <Button Content="Bekijk Alle Geleende Boeken" Width="200" Margin="10" Click="BekijkAlleGeleendeBoeken_Click">
+            <Button Content="Leenoverzicht" Width="200" Margin="10" Click="BekijkAlleGeleendeBoeken_Click">
                 <Button.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="Bekijk uitgeleende boeken" Click="BekijkGeleendeBoeken_Click" />
+                        <MenuItem Header="Leenoverzicht" Click="BekijkGeleendeBoeken_Click" />
                     </ContextMenu>
                 </Button.ContextMenu>
             </Button>

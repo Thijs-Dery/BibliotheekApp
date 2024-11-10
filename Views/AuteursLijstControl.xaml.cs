@@ -48,7 +48,13 @@ namespace BibliotheekApp.Views
             if (auteur != null)
             {
                 string nieuweNaam = Microsoft.VisualBasic.Interaction.InputBox("Geef de nieuwe naam:", "Update Auteur", auteur.Naam);
-                DateTime nieuweGeboorteDatum = DateTime.Parse(Microsoft.VisualBasic.Interaction.InputBox("Geef de nieuwe geboortedatum:", "Update Auteur", auteur.GeboorteDatum.ToString("dd-MM-yyyy")));
+                string inputDatum = Microsoft.VisualBasic.Interaction.InputBox("Geef de nieuwe geboortedatum:", "Update Auteur", auteur.GeboorteDatum.ToString("dd-MM-yyyy"));
+                DateTime nieuweGeboorteDatum;
+                if (!DateTime.TryParse(inputDatum, out nieuweGeboorteDatum))
+                {
+                    MessageBox.Show("Ongeldige datum ingevoerd of actie geannuleerd.", "Waarschuwing", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
 
                 _auteurController.UpdateAuteur(auteurId, nieuweNaam, nieuweGeboorteDatum);
                 AuteursDataGrid.ItemsSource = _auteurController.GetAlleAuteurs(); // Refresh lijst

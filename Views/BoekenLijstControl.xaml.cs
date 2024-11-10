@@ -55,7 +55,14 @@ namespace BibliotheekApp.Views
             {
                 string nieuweTitel = Microsoft.VisualBasic.Interaction.InputBox("Geef de nieuwe titel:", "Update Boek", boek.Titel);
                 string nieuwGenre = Microsoft.VisualBasic.Interaction.InputBox("Geef het nieuwe genre:", "Update Boek", boek.Genre);
-                DateTime nieuwePublicatieDatum = DateTime.Parse(Microsoft.VisualBasic.Interaction.InputBox("Geef de nieuwe publicatiedatum:", "Update Boek", boek.PublicatieDatum.ToString("dd-MM-yyyy")));
+                string inputDatum = Microsoft.VisualBasic.Interaction.InputBox("Geef de nieuwe publicatiedatum:", "Update Boek", boek.PublicatieDatum.ToString("dd-MM-yyyy"));
+                DateTime nieuwePublicatieDatum;
+                if (!DateTime.TryParse(inputDatum, out nieuwePublicatieDatum))
+                {
+                    MessageBox.Show("Ongeldige datum ingevoerd of actie geannuleerd.", "Waarschuwing", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
 
                 _boekController.BewerkBoek(isbn, nieuweTitel, nieuwGenre, nieuwePublicatieDatum);
                 BoekenDataGrid.ItemsSource = _boekController.GetAlleBoeken(); // Refresh lijst

@@ -56,7 +56,14 @@ namespace BibliotheekApp.Views
             if (lid != null)
             {
                 string nieuweNaam = Microsoft.VisualBasic.Interaction.InputBox("Geef de nieuwe naam:", "Update Lid", lid.Naam);
-                DateTime nieuweGeboorteDatum = DateTime.Parse(Microsoft.VisualBasic.Interaction.InputBox("Geef de nieuwe geboortedatum:", "Update Lid", lid.GeboorteDatum.ToString("dd-MM-yyyy")));
+                string inputDatum = Microsoft.VisualBasic.Interaction.InputBox("Geef de nieuwe geboortedatum:", "Update Lid", lid.GeboorteDatum.ToString("dd-MM-yyyy"));
+                DateTime nieuweGeboorteDatum;
+                if (!DateTime.TryParse(inputDatum, out nieuweGeboorteDatum))
+                {
+                    MessageBox.Show("Ongeldige datum ingevoerd of actie geannuleerd.", "Waarschuwing", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
 
                 _lidController.UpdateLid(lidId, nieuweNaam, nieuweGeboorteDatum);
                 LedenDataGrid.ItemsSource = _lidController.GetAlleLeden(); // Refresh lijst
