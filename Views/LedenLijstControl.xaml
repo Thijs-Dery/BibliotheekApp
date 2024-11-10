@@ -9,22 +9,6 @@
                 <DataGridTextColumn Header="Naam" Binding="{Binding Naam}" Width="200"/>
                 <DataGridTextColumn Header="Geboortedatum" Binding="{Binding GeboorteDatum, StringFormat={}{0:dd-MM-yyyy}}" Width="150"/>
 
-                <DataGridTemplateColumn Header="Boek Toevoegen" Width="120">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button Content="Toevoegen" Click="VoegBoekToeAanLid_Click" Tag="{Binding LidID}" HorizontalAlignment="Center"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-
-                <DataGridTemplateColumn Header="Boek Verwijderen" Width="120">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button Content="Verwijderen" Click="VerwijderBoekVanLid_Click" Tag="{Binding LidID}" HorizontalAlignment="Center"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-
                 <DataGridTemplateColumn Header="Bewerken" Width="100">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
