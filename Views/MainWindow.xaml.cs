@@ -86,7 +86,7 @@ namespace BibliotheekApp
                 {
                     Title = "Alle Geleende Boeken",
                     Content = new AllGeleendeBoekenControl(),
-                    Width = 800,
+                    Width = 730,
                     Height = 600
                 };
                 _alleGeleendeBoekenWindow.Closed += (s, args) => _alleGeleendeBoekenWindow = null;

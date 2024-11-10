@@ -100,6 +100,11 @@ namespace BibliotheekApp.Views
                 }
             }
         }
+
+        private void Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            LedenDataGrid.ItemsSource = _lidController.GetAlleLeden(); // Refresh lijst
+        }
     }
 }
 

@@ -71,6 +71,11 @@ namespace BibliotheekApp.Views
         {
             Window.GetWindow(this)?.Close();
         }
+
+        private void Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            AuteursDataGrid.ItemsSource = _auteurController.GetAlleAuteurs(); // Refresh lijst
+        }
     }
 }
 

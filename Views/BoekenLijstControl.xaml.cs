@@ -32,7 +32,7 @@ namespace BibliotheekApp.Views
                 {
                     Title = "Boek Toevoegen",
                     Content = new BoekenToevoegenControl(),
-                    Width = 400,
+                    Width = 450,
                     Height = 400
                 };
                 _boekenToevoegenWindow.Closed += (s, args) => _boekenToevoegenWindow = null;
@@ -77,6 +77,11 @@ namespace BibliotheekApp.Views
         private void Sluit_Click(object sender, RoutedEventArgs e)
         {
             Window.GetWindow(this)?.Close();
+        }
+
+        private void Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            BoekenDataGrid.ItemsSource = _boekController.GetAlleBoeken(); // Refresh lijst
         }
     }
 }

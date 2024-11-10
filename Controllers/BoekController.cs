@@ -123,9 +123,6 @@ namespace BibliotheekApp.Controllers
                            .ToList<dynamic>();
         }
 
-
-
-
         // UPDATE
         public void BewerkBoek(string isbn, string titel, string genre, DateTime publicatieDatum)
         {
