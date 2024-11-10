@@ -35,7 +35,7 @@
 
         <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Center" Margin="5">
             <Button Content="Voeg Boek Toe" Click="VoegBoekToe_Click" Width="100" Margin="5"/>
-            <Button Content="Terug" Click="Terug_Click" Width="100" Margin="5"/>
+            <Button Content="Sluit" Click="Sluit_Click" Width="100" Margin="5"/>
         </StackPanel>
     </Grid>
 </UserControl>

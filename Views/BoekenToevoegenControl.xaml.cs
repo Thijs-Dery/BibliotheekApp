@@ -61,11 +61,9 @@ namespace BibliotheekApp.Views
             ISBNTextBox.IsEnabled = true; // Maak weer invulbaar
         }
 
-        private void Terug_Click(object sender, RoutedEventArgs e)
+        private void Sluit_Click(object sender, RoutedEventArgs e)
         {
-            var mainWindow = (MainWindow)Application.Current.MainWindow;
-            mainWindow.MainFrame.Content = null;
-            mainWindow.ButtonPanel.Visibility = Visibility.Visible;
+            Window.GetWindow(this)?.Close();
         }
     }
 }

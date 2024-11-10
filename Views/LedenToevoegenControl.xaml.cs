@@ -37,6 +37,11 @@ namespace BibliotheekApp.Views
             mainWindow.MainFrame.Content = null;
             mainWindow.ButtonPanel.Visibility = Visibility.Visible;
         }
+
+        private void Sluit_Click(object sender, RoutedEventArgs e)
+        {
+            Window.GetWindow(this)?.Close();
+        }
     }
 }
 
