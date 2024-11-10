@@ -108,16 +108,23 @@ namespace BibliotheekApp.Controllers
         {
             return _context.Boeken
                            .Include(b => b.Auteur)
+                           .Include(b => b.LidBoeken)
+                           .ThenInclude(lb => lb.Lid)
                            .Select(b => new
                            {
                                b.ISBN,
                                b.Titel,
                                b.Genre,
                                b.PublicatieDatum,
-                               AuteurNaam = b.Auteur != null ? b.Auteur.Naam : "Onbekend"
+                               AuteurNaam = b.Auteur != null ? b.Auteur.Naam : "Onbekend",
+                               UitleenDatum = b.LidBoeken.Any() ? b.LidBoeken.FirstOrDefault().UitleenDatum : (DateTime?)null, // Neem de uitleendatum op
+                               LenerNaam = b.LidBoeken.Any() ? b.LidBoeken.FirstOrDefault().Lid.Naam : "Niet uitgeleend"
                            })
                            .ToList<dynamic>();
         }
+
+
+
 
         // UPDATE
         public void BewerkBoek(string isbn, string titel, string genre, DateTime publicatieDatum)

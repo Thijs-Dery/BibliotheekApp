@@ -5,9 +5,9 @@
         <DataGrid x:Name="GeleendeBoekenDataGrid" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ISBN" Binding="{Binding ISBN}" Width="150"/>
-                <DataGridTextColumn Header="Titel" Binding="{Binding Boek.Titel}" Width="200"/>
+                <DataGridTextColumn Header="Titel" Binding="{Binding Titel}" Width="200"/>
                 <DataGridTextColumn Header="UitleenDatum" Binding="{Binding UitleenDatum, StringFormat={}{0:dd-MM-yyyy}}" Width="150"/>
-                <DataGridTextColumn Header="InleverDatum" Binding="{Binding InleverDatum, StringFormat={}{0:dd-MM-yyyy}}" Width="150"/>
+                <DataGridTextColumn Header="Lener" Binding="{Binding LenerNaam}" Width="200"/>
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>

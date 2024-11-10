@@ -6,14 +6,21 @@ namespace BibliotheekApp.Views
 {
     public partial class AllGeleendeBoekenControl : UserControl
     {
-        private readonly LidController _lidController;
+        private readonly BoekController _boekController;
 
         public AllGeleendeBoekenControl()
         {
             InitializeComponent();
-            _lidController = new LidController();
-            GeleendeBoekenDataGrid.ItemsSource = _lidController.GetAllGeleendeBoeken();
+            _boekController = new BoekController();
+            LaadGeleendeBoeken();
+        }
+
+        private void LaadGeleendeBoeken()
+        {
+            var geleendeBoeken = _boekController.GetAlleBoeken();
+            GeleendeBoekenDataGrid.ItemsSource = geleendeBoeken;
         }
     }
 }
+
 

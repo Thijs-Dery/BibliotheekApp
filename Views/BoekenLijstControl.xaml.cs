@@ -8,6 +8,7 @@ namespace BibliotheekApp.Views
     public partial class BoekenLijstControl : UserControl
     {
         private readonly BoekController _boekController;
+        private Window _boekenToevoegenWindow;
 
         public BoekenLijstControl()
         {
@@ -25,14 +26,22 @@ namespace BibliotheekApp.Views
 
         private void BoekToevoegen_Click(object sender, RoutedEventArgs e)
         {
-            var boekenToevoegenWindow = new Window
+            if (_boekenToevoegenWindow == null || !_boekenToevoegenWindow.IsVisible)
             {
-                Title = "Boek Toevoegen",
-                Content = new BoekenToevoegenControl(),
-                Width = 600,
-                Height = 400
-            };
-            boekenToevoegenWindow.Show(); 
+                _boekenToevoegenWindow = new Window
+                {
+                    Title = "Boek Toevoegen",
+                    Content = new BoekenToevoegenControl(),
+                    Width = 400,
+                    Height = 400
+                };
+                _boekenToevoegenWindow.Closed += (s, args) => _boekenToevoegenWindow = null;
+                _boekenToevoegenWindow.Show();
+            }
+            else
+            {
+                _boekenToevoegenWindow.Focus();
+            }
         }
 
         private void UpdateBoek_Click(object sender, RoutedEventArgs e)
@@ -65,14 +74,13 @@ namespace BibliotheekApp.Views
             }
         }
 
-        private void Terug_Click(object sender, RoutedEventArgs e)
+        private void Sluit_Click(object sender, RoutedEventArgs e)
         {
-            var mainWindow = (MainWindow)Application.Current.MainWindow;
-            mainWindow.MainFrame.Content = null;
-            mainWindow.ButtonPanel.Visibility = Visibility.Visible;
+            Window.GetWindow(this)?.Close();
         }
     }
 }
+
 
 
 

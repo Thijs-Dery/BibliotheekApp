@@ -9,6 +9,8 @@ namespace BibliotheekApp.Views
     public partial class LedenLijstControl : UserControl
     {
         private readonly LidController _lidController;
+        private Window _ledenToevoegenWindow;
+        private Window _geleendeBoekenWindow;
 
         public LedenLijstControl()
         {
@@ -26,14 +28,22 @@ namespace BibliotheekApp.Views
 
         private void LidToevoegen_Click(object sender, RoutedEventArgs e)
         {
-            var ledenToevoegenWindow = new Window
+            if (_ledenToevoegenWindow == null || !_ledenToevoegenWindow.IsVisible)
             {
-                Title = "Lid Toevoegen",
-                Content = new LedenToevoegenControl(),
-                Width = 600,
-                Height = 400
-            };
-            ledenToevoegenWindow.Show();
+                _ledenToevoegenWindow = new Window
+                {
+                    Title = "Lid Toevoegen",
+                    Content = new LedenToevoegenControl(),
+                    Width = 400,
+                    Height = 400
+                };
+                _ledenToevoegenWindow.Closed += (s, args) => _ledenToevoegenWindow = null;
+                _ledenToevoegenWindow.Show();
+            }
+            else
+            {
+                _ledenToevoegenWindow.Focus();
+            }
         }
 
         private void BewerkLid_Click(object sender, RoutedEventArgs e)
@@ -65,11 +75,9 @@ namespace BibliotheekApp.Views
             }
         }
 
-        private void Terug_Click(object sender, RoutedEventArgs e)
+        private void Sluit_Click(object sender, RoutedEventArgs e)
         {
-            var mainWindow = (MainWindow)Application.Current.MainWindow;
-            mainWindow.MainFrame.Content = null;
-            mainWindow.ButtonPanel.Visibility = Visibility.Visible;
+            Window.GetWindow(this)?.Close();
         }
 
         private void BekijkGeleendeBoeken_Click(object sender, RoutedEventArgs e)
@@ -80,12 +88,21 @@ namespace BibliotheekApp.Views
             var lid = _lidController.GetAlleLeden().FirstOrDefault(l => l.LidID == lidId);
             if (lid != null)
             {
-                GeleendeBoekenWindow boekenWindow = new GeleendeBoekenWindow(lid);
-                boekenWindow.Show();
+                if (_geleendeBoekenWindow == null || !_geleendeBoekenWindow.IsVisible)
+                {
+                    _geleendeBoekenWindow = new GeleendeBoekenWindow(lid);
+                    _geleendeBoekenWindow.Closed += (s, args) => _geleendeBoekenWindow = null;
+                    _geleendeBoekenWindow.Show();
+                }
+                else
+                {
+                    _geleendeBoekenWindow.Focus();
+                }
             }
         }
     }
 }
+
 
 
 

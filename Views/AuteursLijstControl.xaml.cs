@@ -9,6 +9,7 @@ namespace BibliotheekApp.Views
     public partial class AuteursLijstControl : UserControl
     {
         private readonly AuteurController _auteurController;
+        private Window _auteursToevoegenWindow;
 
         public AuteursLijstControl()
         {
@@ -19,14 +20,22 @@ namespace BibliotheekApp.Views
 
         private void AuteurToevoegen_Click(object sender, RoutedEventArgs e)
         {
-            var auteursToevoegenWindow = new Window
+            if (_auteursToevoegenWindow == null || !_auteursToevoegenWindow.IsVisible)
             {
-                Title = "Auteur Toevoegen",
-                Content = new AuteursToevoegenControl(),
-                Width = 600,
-                Height = 400
-            };
-            auteursToevoegenWindow.Show();
+                _auteursToevoegenWindow = new Window
+                {
+                    Title = "Auteur Toevoegen",
+                    Content = new AuteursToevoegenControl(),
+                    Width = 400,
+                    Height = 400
+                };
+                _auteursToevoegenWindow.Closed += (s, args) => _auteursToevoegenWindow = null;
+                _auteursToevoegenWindow.Show();
+            }
+            else
+            {
+                _auteursToevoegenWindow.Focus();
+            }
         }
 
         private void UpdateAuteur_Click(object sender, RoutedEventArgs e)
@@ -58,13 +67,12 @@ namespace BibliotheekApp.Views
             }
         }
 
-        private void Terug_Click(object sender, RoutedEventArgs e)
+        private void Sluit_Click(object sender, RoutedEventArgs e)
         {
-            var mainWindow = (MainWindow)Application.Current.MainWindow;
-            mainWindow.MainFrame.Content = null;
-            mainWindow.ButtonPanel.Visibility = Visibility.Visible;
+            Window.GetWindow(this)?.Close();
         }
     }
 }
+
 
 

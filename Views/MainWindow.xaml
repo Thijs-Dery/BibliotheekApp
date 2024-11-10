@@ -1,7 +1,7 @@
 ﻿<Window x:Class="BibliotheekApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Bibliotheek App" Height="500" Width="500">
+        Title="Bibliotheek App" Height="325" Width="307">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -9,12 +9,9 @@
         </Grid.RowDefinitions>
 
         <StackPanel x:Name="ButtonPanel" VerticalAlignment="Top" Grid.Row="0" Orientation="Vertical" Margin="10,10,10,0" Height="405" Grid.RowSpan="2">
-            <Button Content="Boeken Toevoegen" Width="200" Margin="10" Click="BoekenToevoegen_Click"/>
-            <Button Content="Auteurs Toevoegen" Width="200" Margin="10" Click="AuteursToevoegen_Click"/>
-            <Button Content="Leden Toevoegen" Width="200" Margin="10" Click="LedenToevoegen_Click"/>
-            <Button Content="Lijst met Boeken" Width="200" Margin="10" Click="OpenBoekenLijst_Click"/>
-            <Button Content="Lijst met Leden" Width="200" Margin="10" Click="OpenLedenLijst_Click"/>
-            <Button Content="Lijst met Auteurs" Width="200" Margin="10" Click="OpenAuteursLijst_Click"/>
+            <Button Content="Boeken" Width="200" Margin="10" Click="OpenBoekenLijst_Click"/>
+            <Button Content="Leden" Width="200" Margin="10" Click="OpenLedenLijst_Click"/>
+            <Button Content="Auteurs" Width="200" Margin="10" Click="OpenAuteursLijst_Click"/>
             <Button Content="Bekijk Alle Geleende Boeken"  Width="200" Margin="10" Click="BekijkAlleGeleendeBoeken_Click"/>
         </StackPanel>
 
