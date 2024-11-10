@@ -99,6 +99,12 @@ namespace BibliotheekApp.Views
 
             BoekenDataGrid.ItemsSource = gefilterdeBoeken;
         }
+
+        private void BoekenDataGrid_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            // Voorkom dat er acties plaatsvinden bij dubbelklikken in de DataGrid
+            e.Handled = true;
+        }
     }
 }
 

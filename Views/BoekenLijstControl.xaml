@@ -20,12 +20,14 @@
         <Button Content="Boek Toevoegen" Click="BoekToevoegen_Click" Margin="5" DockPanel.Dock="Top"/>
 
         <DataGrid x:Name="BoekenDataGrid" AutoGenerateColumns="False" ItemsSource="{Binding}" CanUserAddRows="False"
-                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                  PreviewMouseDoubleClick="BoekenDataGrid_PreviewMouseDoubleClick"
+                  IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ISBN" Binding="{Binding ISBN}" Width="150" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Titel" Binding="{Binding Titel}" Width="200"/>
                 <DataGridTextColumn Header="Auteur" Binding="{Binding AuteurNaam}" Width="200"/>
-                <DataGridTextColumn Header="Genre" Binding="{Binding Genre}" Width="150"/>
+                <DataGridTextColumn Header="Genre" Binding="{Binding Genre, Mode=OneWay}" Width="150" IsReadOnly="True"/>
                 <DataGridTextColumn Header="PublicatieDatum" Binding="{Binding PublicatieDatum, StringFormat={}{0:dd-MM-yyyy}}" Width="150"/>
 
                 <DataGridTemplateColumn Header="Bewerken" Width="80">
@@ -47,6 +49,9 @@
         </DataGrid>
     </DockPanel>
 </UserControl>
+
+
+
 
 
 
