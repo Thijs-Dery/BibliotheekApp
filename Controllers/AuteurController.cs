@@ -1,4 +1,7 @@
 ﻿using BibliotheekApp.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 
 namespace BibliotheekApp.Controllers
@@ -7,9 +10,16 @@ namespace BibliotheekApp.Controllers
     {
         private readonly BibliotheekContext _context;
 
+        // Constructor met de juiste syntax
         public AuteurController()
         {
             _context = new BibliotheekContext();
+        }
+
+        // READ
+        public List<Auteur> GetAlleAuteurs()
+        {
+            return _context.Auteurs.ToList();
         }
 
         // CREATE
@@ -39,12 +49,6 @@ namespace BibliotheekApp.Controllers
             {
                 MessageBox.Show($"Er is een fout opgetreden bij het toevoegen van de auteur: {ex.Message}");
             }
-        }
-
-        // READ
-        public List<Auteur> GetAlleAuteurs()
-        {
-            return _context.Auteurs.ToList();
         }
 
         // UPDATE
@@ -95,5 +99,6 @@ namespace BibliotheekApp.Controllers
         }
     }
 }
+
 
 

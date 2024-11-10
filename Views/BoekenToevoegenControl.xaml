@@ -28,8 +28,9 @@
         <DatePicker x:Name="PublicatieDatumPicker" Grid.Row="2" Grid.Column="1" Margin="5" Width="200"/>
 
         <!-- Auteur ID -->
-        <Label Content="Auteur ID:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
-        <TextBox x:Name="AuteurIDTextBox" Grid.Row="3" Grid.Column="1" Margin="5" Width="200"/>
+        <Label Content="Auteur:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>
+        <ComboBox x:Name="AuteurComboBox" Grid.Row="3" Grid.Column="1" Margin="5" Width="200" DisplayMemberPath="Naam" SelectedValuePath="AuteurID"/>
+
 
         <!-- ISBN -->
         <Label Content="ISBN:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="5"/>

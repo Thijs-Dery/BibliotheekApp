@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using BibliotheekApp.Controllers;
+using BibliotheekApp.Models;
 
 namespace BibliotheekApp.Views
 {
@@ -13,6 +14,11 @@ namespace BibliotheekApp.Views
         {
             InitializeComponent();
             _boekController = new BoekController();
+
+            // Vul de AuteurComboBox met auteurs
+            var auteurController = new AuteurController();
+            List<Auteur> auteurs = auteurController.GetAlleAuteurs();
+            AuteurComboBox.ItemsSource = auteurs;
         }
 
         private void VoegBoekToe_Click(object sender, RoutedEventArgs e)
@@ -22,27 +28,27 @@ namespace BibliotheekApp.Views
             string titel = TitelTextBox.Text;
             string genre = GenreTextBox.Text;
             DateTime? publicatieDatum = PublicatieDatumPicker.SelectedDate;
-            bool auteurIdParseSuccess = int.TryParse(AuteurIDTextBox.Text, out int auteurId);
+            int? auteurId = (int?)AuteurComboBox.SelectedValue;
 
             // Controleer of verplichte velden zijn ingevuld
-            if (string.IsNullOrWhiteSpace(titel) || string.IsNullOrWhiteSpace(genre) || (!ISBNLeeglatenCheckBox.IsChecked == true && string.IsNullOrWhiteSpace(isbn)) || !publicatieDatum.HasValue || !auteurIdParseSuccess)
-
+            if (auteurId == null || string.IsNullOrWhiteSpace(titel) || string.IsNullOrWhiteSpace(genre) || (!(ISBNLeeglatenCheckBox.IsChecked ?? false) && string.IsNullOrWhiteSpace(isbn)) || !publicatieDatum.HasValue)
             {
-                MessageBox.Show("Vul alle velden in en zorg dat Auteur ID een geldig nummer is. ISBN mag alleen leeg zijn als de checkbox is aangevinkt.", "Waarschuwing", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Vul alle velden in en selecteer een geldige auteur.", "Waarschuwing", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             var boekController = new BoekController();
-            boekController.VoegBoekToe(titel, genre, publicatieDatum.Value, auteurId, isbn);
+            boekController.VoegBoekToe(titel, genre, publicatieDatum.Value, auteurId.Value, isbn);
 
             // Maak de invoervelden leeg
             TitelTextBox.Text = "";
             GenreTextBox.Text = "";
             PublicatieDatumPicker.SelectedDate = null;
-            AuteurIDTextBox.Text = "";
             ISBNTextBox.Text = "";
             ISBNLeeglatenCheckBox.IsChecked = false; // Reset de checkbox
+            AuteurComboBox.SelectedIndex = -1; // Reset de selectie
         }
+
 
         private void ISBNLeeglatenCheckBox_Checked(object sender, RoutedEventArgs e)
         {
