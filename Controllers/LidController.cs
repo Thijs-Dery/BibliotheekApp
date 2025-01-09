@@ -21,10 +21,25 @@ namespace BibliotheekApp.Controllers
         {
             try
             {
-                var bestaandeLid = _context.Leden.FirstOrDefault(l => l.Naam == naam && l.GeboorteDatum == geboorteDatum);
-
-                if (bestaandeLid != null)
+                if (string.IsNullOrWhiteSpace(naam))
                 {
+                    MessageBox.Show("Naam mag niet leeg zijn.", "Fout", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return false;
+                }
+
+                var bestaandLid = _context.Leden.IgnoreQueryFilters()
+                                      .FirstOrDefault(l => l.Naam == naam && l.GeboorteDatum == geboorteDatum);
+
+                if (bestaandLid != null)
+                {
+                    if (bestaandLid.IsDeleted)
+                    {
+                        bestaandLid.IsDeleted = false;
+                        _context.SaveChanges();
+                        MessageBox.Show("Lid opnieuw geactiveerd!");
+                        return true;
+                    }
+
                     MessageBox.Show("Dit lid bestaat al in de database.", "Waarschuwing", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return false;
                 }
@@ -32,7 +47,8 @@ namespace BibliotheekApp.Controllers
                 var lid = new Lid
                 {
                     Naam = naam,
-                    GeboorteDatum = geboorteDatum
+                    GeboorteDatum = geboorteDatum,
+                    IsDeleted = false
                 };
 
                 _context.Leden.Add(lid);
@@ -55,23 +71,6 @@ namespace BibliotheekApp.Controllers
                 return _context.Leden
                                .Include(l => l.GeleendeBoeken)
                                .ThenInclude(gb => gb.Boek)
-                               .Select(l => new Lid
-                               {
-                                   LidID = l.LidID,
-                                   Naam = l.Naam,
-                                   GeboorteDatum = l.GeboorteDatum,
-                                   GeleendeBoeken = l.GeleendeBoeken.Select(gb => new LidBoek
-                                   {
-                                       LidID = gb.LidID,
-                                       ISBN = gb.ISBN,
-                                       Boek = new Boek
-                                       {
-                                           ISBN = gb.Boek.ISBN,
-                                           Titel = gb.Boek.Titel
-                                       },
-                                       UitleenDatum = gb.UitleenDatum
-                                   }).ToList()
-                               })
                                .ToList();
             }
             catch (Exception ex)
@@ -81,7 +80,71 @@ namespace BibliotheekApp.Controllers
             }
         }
 
+        // CREATE RELATION
+        public bool VoegBoekToeAanLid(int lidId, string isbn)
+        {
+            try
+            {
+                var lid = _context.Leden.Include(l => l.GeleendeBoeken).FirstOrDefault(l => l.LidID == lidId);
+                var boek = _context.Boeken.FirstOrDefault(b => b.ISBN == isbn);
 
+                if (lid == null)
+                {
+                    MessageBox.Show("Lid niet gevonden.");
+                    return false;
+                }
+
+                if (boek == null)
+                {
+                    MessageBox.Show("Boek niet gevonden.");
+                    return false;
+                }
+
+                // Voeg een nieuwe entry toe aan LidBoeken met een standaardwaarde voor InleverDatum
+                var lidBoek = new LidBoek
+                {
+                    LidID = lidId,
+                    ISBN = isbn,
+                    UitleenDatum = DateTime.Now,
+                    InleverDatum = DateTime.MaxValue // Standaardwaarde
+                };
+
+                _context.LidBoeken.Add(lidBoek);
+                _context.SaveChanges();
+                MessageBox.Show("Boek succesvol toegevoegd aan lid!");
+                return true;
+            }
+            catch (DbUpdateException ex)
+            {
+                MessageBox.Show($"Er is een fout opgetreden bij het toevoegen van het boek: {ex.InnerException?.Message ?? ex.Message}");
+                return false;
+            }
+        }
+
+        // DELETE RELATION
+        public bool VerwijderBoekVanLid(int lidId, string isbn)
+        {
+            try
+            {
+                var lidBoek = _context.LidBoeken.FirstOrDefault(lb => lb.LidID == lidId && lb.ISBN == isbn);
+
+                if (lidBoek == null)
+                {
+                    MessageBox.Show("Boek niet gevonden of is niet uitgeleend aan dit lid.");
+                    return false;
+                }
+
+                _context.LidBoeken.Remove(lidBoek);
+                _context.SaveChanges();
+                MessageBox.Show("Boek succesvol verwijderd van lid!");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Er is een fout opgetreden bij het verwijderen van het boek: {ex.Message}");
+                return false;
+            }
+        }
 
         // UPDATE
         public bool UpdateLid(int lidId, string naam, DateTime geboorteDatum)
@@ -108,63 +171,6 @@ namespace BibliotheekApp.Controllers
             }
         }
 
-        public bool VoegBoekToeAanLid(int lidId, string isbn)
-        {
-            var lid = _context.Leden.Include(l => l.GeleendeBoeken).FirstOrDefault(l => l.LidID == lidId);
-            var boek = _context.Boeken.FirstOrDefault(b => b.ISBN == isbn);
-
-            if (lid == null)
-            {
-                MessageBox.Show("Lid niet gevonden.");
-                return false;
-            }
-
-            if (boek == null)
-            {
-                MessageBox.Show("Boek niet gevonden.");
-                return false;
-            }
-
-            // Controleer of het boek al is uitgeleend
-            if (boek.LidID != null)
-            {
-                MessageBox.Show("Dit boek is al uitgeleend aan een ander lid.");
-                return false;
-            }
-
-            // Voeg een nieuwe entry toe aan LidBoeken
-            var lidBoek = new LidBoek
-            {
-                LidID = lidId,
-                ISBN = isbn,
-                UitleenDatum = DateTime.Now
-            };
-
-            _context.LidBoeken.Add(lidBoek);
-            _context.SaveChanges();
-            return true;
-        }
-
-        public bool VerwijderBoekVanLid(int lidId, string isbn)
-        {
-            var lidBoek = _context.LidBoeken.FirstOrDefault(lb => lb.LidID == lidId && lb.ISBN == isbn);
-
-            if (lidBoek == null)
-            {
-                MessageBox.Show("Boek niet gevonden of is niet uitgeleend aan dit lid.");
-                return false;
-            }
-
-            _context.LidBoeken.Remove(lidBoek);
-            _context.SaveChanges();
-            return true;
-        }
-
-        public List<LidBoek> GetAllGeleendeBoeken()
-        {
-            return _context.LidBoeken.Include(lb => lb.Boek).ToList();
-        }
-
         // DELETE
         public bool DeleteLid(int lidId)
         {
@@ -184,47 +190,14 @@ namespace BibliotheekApp.Controllers
                     return false;
                 }
 
-                _context.Leden.Remove(lid);
+                lid.IsDeleted = true;
                 _context.SaveChanges();
-                MessageBox.Show("Lid succesvol verwijderd!");
+                MessageBox.Show("Lid succesvol verwijderd (soft-delete)!");
                 return true;
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Er is een fout opgetreden bij het verwijderen van het lid: {ex.Message}");
-                return false;
-            }
-        }
-
-        public bool StopLening(string isbn, int lidId)
-        {
-            try
-            {
-                var lidBoek = _context.LidBoeken
-                                      .Include(lb => lb.Boek)
-                                      .FirstOrDefault(lb => lb.ISBN == isbn && lb.LidID == lidId);
-
-                if (lidBoek == null)
-                {
-                    MessageBox.Show("Geen lening gevonden voor dit boek en lid.");
-                    return false;
-                }
-
-                // Reset de uitleendatum en maak de relatie met het lid los
-                lidBoek.UitleenDatum = null;
-                lidBoek.LidID = null;
-
-                // Verwijder de lidBoek-record om de relatie te verbreken, indien gewenst
-                _context.LidBoeken.Remove(lidBoek);
-
-                _context.SaveChanges();
-
-                MessageBox.Show("Lening succesvol beëindigd!");
-                return true;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Er is een fout opgetreden bij het beëindigen van de lening: {ex.Message}");
                 return false;
             }
         }

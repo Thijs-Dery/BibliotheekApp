@@ -1,4 +1,5 @@
 ﻿using BibliotheekApp.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,10 +27,25 @@ namespace BibliotheekApp.Controllers
         {
             try
             {
-                var bestaandeAuteur = _context.Auteurs.FirstOrDefault(a => a.Naam == naam && a.GeboorteDatum == geboorteDatum);
+                if (string.IsNullOrWhiteSpace(naam))
+                {
+                    MessageBox.Show("Naam mag niet leeg zijn.", "Fout", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                var bestaandeAuteur = _context.Auteurs.IgnoreQueryFilters()
+                                          .FirstOrDefault(a => a.Naam == naam && a.GeboorteDatum == geboorteDatum);
 
                 if (bestaandeAuteur != null)
                 {
+                    if (bestaandeAuteur.IsDeleted)
+                    {
+                        bestaandeAuteur.IsDeleted = false;
+                        _context.SaveChanges();
+                        MessageBox.Show("Auteur opnieuw geactiveerd!");
+                        return;
+                    }
+
                     MessageBox.Show("Deze auteur bestaat al in de database.", "Waarschuwing", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
@@ -37,7 +53,8 @@ namespace BibliotheekApp.Controllers
                 var auteur = new Auteur
                 {
                     Naam = naam,
-                    GeboorteDatum = geboorteDatum
+                    GeboorteDatum = geboorteDatum,
+                    IsDeleted = false
                 };
 
                 _context.Auteurs.Add(auteur);
@@ -49,6 +66,8 @@ namespace BibliotheekApp.Controllers
                 MessageBox.Show($"Er is een fout opgetreden bij het toevoegen van de auteur: {ex.Message}");
             }
         }
+
+
 
         // UPDATE
         public void UpdateAuteur(int auteurId, string naam, DateTime geboorteDatum)
@@ -82,9 +101,9 @@ namespace BibliotheekApp.Controllers
                 var auteur = _context.Auteurs.Find(auteurId);
                 if (auteur != null)
                 {
-                    _context.Auteurs.Remove(auteur);
+                    auteur.IsDeleted = true;
                     _context.SaveChanges();
-                    MessageBox.Show("Auteur succesvol verwijderd!");
+                    MessageBox.Show("Auteur succesvol verwijderd (soft-delete)!");
                 }
                 else
                 {

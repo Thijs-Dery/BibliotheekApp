@@ -77,6 +77,25 @@ namespace BibliotheekApp.Controllers
                 return;
             }
 
+            var bestaandBoek = _context.Boeken.IgnoreQueryFilters().FirstOrDefault(b => b.ISBN == isbn);
+            if (bestaandBoek != null)
+            {
+                if (bestaandBoek.IsDeleted)
+                {
+                    bestaandBoek.IsDeleted = false;
+                    bestaandBoek.Titel = titel;
+                    bestaandBoek.Genre = genre;
+                    bestaandBoek.PublicatieDatum = publicatieDatum;
+                    bestaandBoek.AuteurID = auteurId;
+                    _context.SaveChanges();
+                    MessageBox.Show("Boek opnieuw geactiveerd!");
+                    return;
+                }
+
+                MessageBox.Show("Boek met dit ISBN bestaat al.");
+                return;
+            }
+
             try
             {
                 var boek = new Boek
@@ -85,7 +104,8 @@ namespace BibliotheekApp.Controllers
                     Titel = titel,
                     Genre = genre,
                     PublicatieDatum = publicatieDatum,
-                    AuteurID = auteurId
+                    AuteurID = auteurId,
+                    IsDeleted = false
                 };
 
                 _context.Boeken.Add(boek);
@@ -97,6 +117,7 @@ namespace BibliotheekApp.Controllers
                 MessageBox.Show($"Er is een fout opgetreden bij het toevoegen van het boek: {ex.InnerException?.Message ?? ex.Message}");
             }
         }
+
 
         private string GenerateTemporaryISBN()
         {
@@ -155,18 +176,12 @@ namespace BibliotheekApp.Controllers
         {
             try
             {
-                var lidBoeken = _context.LidBoeken.Where(lb => lb.ISBN == isbn).ToList();
-                if (lidBoeken.Any())
-                {
-                    _context.LidBoeken.RemoveRange(lidBoeken);
-                }
-
                 var boek = _context.Boeken.Find(isbn);
                 if (boek != null)
                 {
-                    _context.Boeken.Remove(boek);
+                    boek.IsDeleted = true;
                     _context.SaveChanges();
-                    MessageBox.Show("Boek succesvol verwijderd!");
+                    MessageBox.Show("Boek succesvol verwijderd (soft-delete)!");
                     return true;
                 }
 

@@ -17,13 +17,12 @@ public class Boek
     public DateTime PublicatieDatum { get; set; }
 
     [ForeignKey("Auteur")]
-    public int? AuteurID { get; set; }
+    public int AuteurID { get; set; } // AuteurID is verplicht omdat het in de database "not null" is
     public Auteur Auteur { get; set; }
 
-    [ForeignKey("Lid")]
-    public int? LidID { get; set; }
-    public Lid Lid { get; set; }
-
     public List<LidBoek> LidBoeken { get; set; } = new List<LidBoek>();
+
+    // Andere velden zoals IsDeleted, als je die wilt opnemen in je klasse:
+    public bool IsDeleted { get; set; }
 }
 
